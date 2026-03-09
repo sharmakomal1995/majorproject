@@ -1,0 +1,70 @@
+<% layout("layouts/boilerplate") %>
+
+  <div class="legal-layout">
+
+    <!-- LEFT CONTENT -->
+    <div class="legal-page">
+      <h1>Privacy Policy</h1>
+      <p class="legal-updated">Last updated: January 2026</p>
+
+      <section>
+        <h4>Information We Collect</h4>
+        <p>
+          We collect information you provide directly when you create an account,
+          make bookings, or contact support.
+        </p>
+      </section>
+
+      <section>
+        <h4>How We Use Information</h4>
+        <p>
+          Your data helps us provide and improve our services.
+        </p>
+      </section>
+
+      <section>
+        <h4>Data Security</h4>
+        <p>
+          We use industry-standard security practices to protect your information.
+        </p>
+      </section>
+    </div>
+
+    <!-- RIGHT CONTACT BOX -->
+    <aside class="legal-contact">
+      <h5>Need to get in touch?</h5>
+      <p>
+        We’ll start with a few questions and get you to the right place.
+      </p>
+
+      <a href="/contact" class="contact-btn">Contact us</a>
+
+      <a href="#" class="legal-feedback" onclick="openFeedbackModal(event)">You can also give us feedback</a>
+    </aside>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div id="feedbackModal" class="feedback-overlay">
+    <div class="feedback-modal">
+      <button class="feedback-close" onclick="closeFeedbackModal()">×</button>
+
+      <h3>Tell us about it</h3>
+      <p class="feedback-sub">
+        Share your experience with us. What’s working well?
+        What could’ve gone better?
+      </p>
+
+      <form id="feedbackForm">
+        <textarea id="feedbackText" placeholder="Write your feedback here..." rows="4" required></textarea>
+
+        <label class="bug-check">
+          <input type="checkbox" id="isBug" />
+          I’m reporting a bug
+        </label>
+
+        <button type="submit" class="feedback-submit" disabled>
+          Submit →
+        </button>
+      </form>
+    </div>
+  </div>

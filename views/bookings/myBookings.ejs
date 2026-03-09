@@ -1,0 +1,154 @@
+<style>
+.booking-card{
+ transition:.25s;
+ border:1px solid #ccc;
+ padding:15px;
+ margin:15px;
+ border-radius:12px;
+}
+.booking-card:hover{
+ transform:scale(1.02);
+ box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+.booking-link{
+ text-decoration:none;
+ color:inherit;
+ display:block;
+}
+.action-btn{
+  text-decoration: none;
+ padding:8px 14px;
+ border-radius:8px;
+ border:none;
+ cursor:pointer;
+ font-weight:500;
+ margin-right:10px;
+}
+.download-btn{
+ background:#222;
+ color:white;
+}
+.download-btn:hover{ background:black; }
+
+.cancel-btn{
+ background:#ff385c;
+ color:white;
+}
+.cancel-btn:hover{ background:#e11d48; }
+
+.badge{
+ padding:4px 10px;
+ border-radius:20px;
+ font-size:13px;
+ font-weight:600;
+}
+
+.green{ background:#dcfce7; color:#166534;}
+.red{ background:#fee2e2; color:#991b1b;}
+.blue{ background:#dbeafe; color:#1e40af;}
+.gray{ background:#f3f4f6; color:#374151;}
+.orange{ background:#fed7aa; color:#9a3412;}
+</style>
+
+<h2>My Bookings</h2>
+
+<% bookings.forEach((b)=>{ 
+
+let statusColor="gray";
+if(b.bookingStatus==="reserved") statusColor="green";
+if(b.bookingStatus==="cancelled") statusColor="red";
+if(b.bookingStatus==="completed") statusColor="blue";
+
+let refundColor="red";
+if(b.refundStatus==="processed") refundColor="green";
+if(b.refundStatus==="initiated") refundColor="orange";
+%>
+<div class="booking-card">
+
+<a href="/listings/<%= b.listing._id %>" class="booking-link">
+
+<img src="<%= b.listing.images?.[0]?.url %>"
+     style="width:250px;border-radius:10px;">
+
+<h3><%= b.listing.title %></h3>
+
+<p>Guests: <%= b.guests %></p>
+<p>Check-in: <%= b.checkIn.toDateString() %></p>
+<p>Check-out: <%= b.checkOut.toDateString() %></p>
+<p>Total: ₹ <%= b.totalPrice %></p>
+
+<p>
+Status:
+<span class="badge <%= statusColor %>">
+<%= b.bookingStatus %>
+</span>
+</p>
+
+<% if(b.refundStatus!=="none"){ %>
+<p>
+Refund:
+<span class="badge <%= refundColor %>">
+<%= b.refundStatus %>
+</span>
+</p>
+<% } %>
+
+</a>
+
+<div style="margin-top:10px;">
+
+   <% if (b.bookingStatus === "completed" && b.reviewGiven !== true) { %>
+
+<a href="/bookings/<%= b._id %>/review"
+   class="action-btn"
+   style="background:#10b981;color:white;">
+Leave Review
+</a>
+
+<% } %>
+
+<a href="/bookings/<%= b._id %>/invoice"
+   class="action-btn download-btn">
+Download Invoice
+</a>
+
+<a href="/bookings/<%= b._id %>/details"
+   class="action-btn"
+   style="background:#6366f1;color:white;">
+View Timeline
+</a>
+
+<% if(b.bookingStatus==="reserved"){ %>
+<%
+   const checkInDate = new Date(b.checkIn);
+   const cancelDate = new Date(checkInDate);
+   cancelDate.setDate(checkInDate.getDate() - 5);
+   %>
+   <p class="text-muted">
+      Free cancellation before
+      <%= cancelDate.toLocaleDateString("en-IN",{
+         day:"numeric",
+         month:"long",
+         year:"numeric"
+      }) %>
+      </p>
+   <form action="/bookings/<%= b._id %>/cancel?_method=PATCH"
+      method="POST"
+      style="display:inline;">
+   <button class="action-btn cancel-btn"
+   onclick="return confirm('Are you sure you want to cancel this booking? Refund will be initiated if eligible.')">
+   Cancel Booking
+   </button>
+   </form>
+   <% } else { %>
+   <button class="action-btn cancel-btn" disabled style="opacity:.5;">
+   Cancelled
+   </button>
+
+<% } %>
+
+</div>
+
+</div>
+
+<% }) %>

@@ -1,0 +1,14 @@
+<h2>Edit Review</h2>
+
+<form method="POST" action="/listings/<%= id %>/reviews/<%= review._id %>?_method=PUT">
+
+    <label>Comment</label><br>
+    <textarea name="review[comment]" rows="4"><%= review.comment %></textarea>
+    <br><br>
+
+    <label>Rating</label><br>
+    <input type="number" name="review[rating]" value="<%= review.rating %>" min="1" max="5">
+    <br><br>
+
+    <button type="submit">Update Review</button>
+</form>

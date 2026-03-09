@@ -1,0 +1,149 @@
+<style>
+.review-container{
+ max-width:650px;
+ margin:40px auto;
+ padding:25px;
+ border-radius:16px;
+ box-shadow:0 5px 25px rgba(0,0,0,.08);
+ font-family:system-ui;
+}
+
+.section-title{
+ font-size:20px;
+ font-weight:600;
+ margin:25px 0 15px;
+ border-bottom:1px solid #eee;
+ padding-bottom:6px;
+}
+
+.review-label{
+ display:block;
+ margin-top:15px;
+ font-weight:500;
+}
+
+.review-label i{
+ margin-right:6px;
+ color:#555;
+}
+
+input[type="number"],
+select,
+textarea{
+ width:100%;
+ padding:10px;
+ border-radius:8px;
+ border:1px solid #ddd;
+ margin-top:6px;
+}
+
+textarea{
+ resize:none;
+ height:90px;
+}
+
+.submit-btn{
+ margin-top:25px;
+ width:100%;
+ padding:12px;
+ border:none;
+ border-radius:10px;
+ background:#ff385c;
+ color:white;
+ font-size:16px;
+ font-weight:600;
+ transition:.25s;
+}
+
+.submit-btn:hover{
+ background:#e11d48;
+}
+</style>
+
+
+<div class="review-container">
+
+<h2>
+<i class="fa-solid fa-pen-to-square"></i>
+Review your stay at <%= booking.listing.title %>
+</h2>
+
+<form action="/host-reviews" method="POST">
+
+<input type="hidden" name="bookingId" value="<%= booking._id %>">
+
+<!-- STAY REVIEW -->
+<div class="section-title">
+<i class="fa-solid fa-star" style="color:#f59e0b;"></i>
+Rate Stay
+</div>
+
+<label class="review-label">
+<i class="fa-solid fa-star"></i>
+Overall Rating
+</label>
+<select name="rating" required>
+<option value="5">⭐⭐⭐⭐⭐</option>
+<option value="4">⭐⭐⭐⭐</option>
+<option value="3">⭐⭐⭐</option>
+<option value="2">⭐⭐</option>
+<option value="1">⭐</option>
+</select>
+
+<label class="review-label">
+<i class="fa-solid fa-comment"></i>
+Comment
+</label>
+<textarea name="comment" required></textarea>
+
+
+<!-- HOST REVIEW -->
+<div class="section-title">
+<i class="fa-solid fa-user" style="color:#3b82f6;"></i>
+Rate Host
+</div>
+
+<label class="review-label">
+<i class="fa-solid fa-sack-dollar"></i>
+Value
+</label>
+<input type="number" name="hostReview[value]" min="1" max="5" required>
+
+<label class="review-label">
+<i class="fa-solid fa-location-dot"></i>
+Location
+</label>
+<input type="number" name="hostReview[location]" min="1" max="5" required>
+
+<label class="review-label">
+<i class="fa-solid fa-comments"></i>
+Communication
+</label>
+<input type="number" name="hostReview[communication]" min="1" max="5" required>
+
+<label class="review-label">
+<i class="fa-solid fa-key"></i>
+Check-in
+</label>
+<input type="number" name="hostReview[checkIn]" min="1" max="5" required>
+
+<label class="review-label">
+<i class="fa-solid fa-circle-check"></i>
+Accuracy
+</label>
+<input type="number" name="hostReview[accuracy]" min="1" max="5" required>
+
+<label class="review-label">
+<i class="fa-solid fa-broom"></i>
+Cleanliness
+</label>
+<input type="number" name="hostReview[cleanliness]" min="1" max="5" required>
+
+
+<button class="submit-btn">
+<i class="fa-solid fa-paper-plane"></i>
+Submit Review
+</button>
+
+</form>
+</div>

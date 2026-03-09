@@ -1,15 +1,23 @@
 const Listing = require("./models/listing");
 const Review = require("./models/review");
 const ExpressError = require("./utils/ExpressError.js");
+const { bookingSchema } = require("./utils/bookingSchema");
 const { listingSchema, reviewSchema } = require("./schema.js");
 
 module.exports.isLoggedIn = (req, res, next) => {
-    if (!req.isAuthenticated()) {
-        req.session.redirectUrl = req.originalUrl;
-        req.flash("error", "You must be logged in to create listing!");
-        return res.redirect("/login");
+  if (!req.isAuthenticated()) {
+
+    if (req.xhr || req.headers.accept?.includes("json")) {
+      return res.status(401).json({
+        success: false,
+        message: "You must be logged in"
+      });
     }
-    return next();
+
+    req.session.redirectUrl = req.originalUrl;
+    return res.redirect("/login");
+  }
+  next();
 };
 
 module.exports.saveRedirectUrl = (req, res, next) => {
@@ -31,13 +39,19 @@ module.exports.isOwner = async (req, res, next) => {
 };
 
 module.exports.validateListing = (req, res, next) => {
-    const { error } = listingSchema.validate(req.body);
+    const { error, value } = listingSchema.validate(req.body, {
+        abortEarly: false,
+    });
+
     if (error) {
         const errMsg = error.details.map(el => el.message).join(",");
         return next(new ExpressError(400, errMsg));
     }
+    req.body = value;
+
     return next();
 };
+
 
 module.exports.validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
@@ -57,3 +71,17 @@ module.exports.isReviewAuthor = async (req, res, next) => {
     }
     return next();
 };
+
+module.exports.validateBooking = (req, res, next) => {
+  const { error } = bookingSchema.validate(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+  next();
+};
+
+module.exports.isAdmin = (req,res,next)=>{
+ if(req.user.role !== "admin")
+     return res.send("Admin only");
+ next();
+}

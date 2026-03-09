@@ -1,0 +1,19 @@
+<h2><%= host.username %></h2>
+
+<p>
+    ⭐ <strong><%= avgRating.toFixed(1) %></strong>
+    (<%= reviews.length %> reviews)
+</p>
+
+<hr>
+
+<h4>Reviews</h4>
+
+<% reviews.forEach(review => { %>
+    <div>
+        <strong><%= review.guest.username %></strong>
+        ⭐ <%= review.rating %>
+        <p><%= review.comment %></p>
+        <hr>
+    </div>
+<% }) %>

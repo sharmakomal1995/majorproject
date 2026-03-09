@@ -1,0 +1,26 @@
+<div class="profile-sidebar">
+  <h2>Profile</h2>
+
+  <a href="/profile/about"
+     class="profile-menu <%= page === 'about' ? 'active' : '' %>">
+    <div class="avatar-circle">
+      <img
+        src="<%= currUser.profileImage?.url || '/images/default-user.png' %>"
+        class="profile-pic"
+        alt="Profile picture">
+    </div>
+    <span>About me</span>
+  </a>
+
+  <a href="/profile/past-trips"
+     class="profile-menu <%= page === 'trips' ? 'active' : '' %>">
+    <img src="/images/trips.png" class="menu-icon">
+    <span>Past trips</span>
+  </a>
+
+  <a href="/profile/connections"
+     class="profile-menu <%= page === 'connections' ? 'active' : '' %>">
+    <img src="/images/connections.png" class="menu-icon">
+    <span>Connections</span>
+  </a>
+</div>

@@ -1,0 +1,510 @@
+<% layout ("/layouts/boilerplate") %>
+
+  <% bodyClass="profile-view" %>
+
+    <div class="profile-page">
+
+      <!-- Left sidebar -->
+      <% if (!editMode) { %>
+        <div class="profile-sidebar">
+          <h2>Profile</h2>
+
+          <!-- About me -->
+          <a href="/profile" class="profile-menu <%= page === 'about' ? 'active' : '' %>">
+            <div class="avatar-circle">
+              <img src="<%= currUser.profileImage?.url || '/images/default-user.png' %>" class="profile-pic"
+                alt="Profile picture">
+            </div>
+            <span>About me</span>
+          </a>
+
+          <!-- Past trips -->
+          <a href="/profile/past-trips" class="profile-menu <%= page === 'trips' ? 'active' : '' %>">
+            <img src="/images/trips.png" class="menu-icon">
+            <span>Past trips</span>
+          </a>
+
+          <!-- Connections -->
+          <a href="/profile/connections" class="profile-menu <%= page === 'connections' ? 'active' : '' %>">
+            <img src="/images/connections.png" class="menu-icon">
+            <span>Connections</span>
+          </a>
+        </div>
+        <% } %>
+          <!-- Right content -->
+          <div class="profile-content">
+
+            <div class="profile-header">
+              <% if (!editMode) { %>
+                <h2>About me</h2>
+                <a href="/profile/about?editMode=true" class="edit-btn">Edit</a>
+                <% } else { %>
+                  <h2>My profile</h2>
+                  <% } %>
+            </div>
+
+            <% if (!editMode) { %>
+
+              <!-- NORMAL PROFILE VIEW -->
+              <div class="profile-card">
+                <div class="avatar-large">
+                  <img src="<%= currUser.profileImage?.url || '/images/default-user.png' %>" alt="Profile picture">
+                </div>
+
+                <h3>
+                  <%= currUser.username %>
+                </h3>
+                <p>Guest</p>
+              </div>
+              <div class="about-details">
+                <div class="about-main">
+                  <% if (currUser.profile?.birth) { %>
+                    <p>🎂 Born in <%= currUser.profile.birth %>
+                    </p>
+                    <% } %>
+
+                      <% if (currUser.profile?.work) { %>
+                        <p>💼 My work: <%= currUser.profile.work %>
+                        </p>
+                        <% } %>
+
+                          <% if (currUser.profile?.travel) { %>
+                            <p>✈️ Where I’ve always wanted to go: <%= currUser.profile.travel %>
+                            </p>
+                            <% } %>
+
+                              <% if (currUser.profile?.pet) { %>
+                                <p>🐶 Pets: <%= currUser.profile.pet %>
+                                </p>
+                                <% } %>
+
+                                  <% if (currUser.profile?.school) { %>
+                                    <p>🎓 School: <%= currUser.profile.school %>
+                                    </p>
+                                    <% } %>
+
+                </div>
+                <div class="about-extra" id="extraDetails" style="display:none;">
+                  <% if (currUser.profile?.fun) { %>
+                    <p>✨ Fun fact: <%= currUser.profile.fun %>
+                    </p>
+                    <% } %>
+
+                      <% if (currUser.profile?.time) { %>
+                        <p>⏳ I spend too much time: <%= currUser.profile.time %>
+                        </p>
+                        <% } %>
+
+                          <% if (currUser.profile?.skill) { %>
+                            <p>🧠 Most useless skill: <%= currUser.profile.skill %>
+                            </p>
+                            <% } %>
+
+                              <% if (currUser.profile?.song) { %>
+                                <p>🎵 Favourite song: <%= currUser.profile.song %>
+                                </p>
+                                <% } %>
+
+                                  <% if (currUser.profile?.observe) { %>
+                                    <p>❤️ Obsessed with: <%= currUser.profile.observe %>
+                                    </p>
+                                    <% } %>
+
+                                      <% if (currUser.profile?.biography) { %>
+                                        <p>📖 Biography title: <%= currUser.profile.biography %>
+                                        </p>
+                                        <% } %>
+                </div>
+                <button onclick="toggleDetails()" class="show-all-btn">
+                  Show all
+                </button>
+              </div>
+
+
+              <% } else { %>
+
+                <!-- AIRBNB STYLE EDIT PROFILE -->
+
+                <div class="airbnb-edit-page">
+
+                  <!-- Center profile image -->
+                  <div class="airbnb-avatar">
+                    <div class="avatar-wrapper">
+                      <img src="<%= currUser.profileImage?.url || '/images/default-user.png' %>" alt="Profile picture"
+                        class="avatar-img">
+
+                      <form action="/profile" method="POST" enctype="multipart/form-data">
+                        <label class="airbnb-add-btn">
+                          <input type="file" name="profileImage" hidden>
+                          <%= currUser.profileImage?.url ? "Edit" : "Add" %>
+                        </label>
+                      </form>
+                    </div>
+                    <!-- NAME DISPLAY -->
+                    <div class="profile-name-wrapper">
+                      <span id="profileName" ondblclick="enableNameEdit()">
+                        <%= currUser.username %>
+                      </span>
+
+                      <!-- Hidden input -->
+                      <form id="nameEditForm" action="/profile" method="POST" style="display:none;">
+                        <input type="text" name="username" id="nameInput" value="<%= currUser.username %>"
+                          onblur="submitName()" onkeydown="handleEnter(event)">
+                      </form>
+                    </div>
+                  </div>
+
+                  <!-- Airbnb style options grid -->
+                  <div class="profile-options-wrapper">
+                    <div class="airbnb-options">
+
+                    <div class="option" onclick="openModal(
+                      'birth',
+       'Decade you were born',
+       'Dont worry other people would not be able to see your exact birthday',
+       'Show the decade I was born'
+     )">
+                      <div class="left">
+                      <span class="icon">🎂</span>
+                      <div class="text">
+                      <strong>Decade I was born</strong>
+                      <p>
+                        <%= currUser.profile?.birth || "Not added" %>
+                      </p>
+                      </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+
+                    <div class="option" onclick="openModal(
+                        'work',
+       'What do you do for work??',
+       'Tell us what your profession is. If you don’t have a traditional job, tell us your life’s calling. Example: Nurse, parent to four kids, or retired surfer. Where is this shown?',
+       'My Work:'
+     )">
+                    <div class="left">
+                      <span class="icon">💼</span>
+                      <div class="text">
+                      <strong>My work</strong>
+                      <p>
+                        <%= currUser.profile?.work || "Not added" %>
+                      </p>
+                      </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+
+                    <div class="option" onclick="openModal(
+                        'travel',
+       'Where have you always wanted to travel?',
+       'Whether it’s on your bucket list or your shortlist, tell us a place you can’t wait to visit.',
+       'Where I’ve always wanted to go'
+     )">
+                      <div class="left">
+                      <span class="icon">✈️</span>
+                      <div class="text">
+                      <strong>Where I’ve always wanted to go</strong>
+                      <p>
+                        <%= currUser.profile?.travel || "Not added" %>
+                      </p>
+                      </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+
+                    <div class="option" onclick="openModal(
+                        'pet',
+       'Do you have any pets in your life?',
+       'Share any pets you have and their names. Example: My calico cat Whiskers or my speedy tortoise Leonardo.',
+       'Pets'
+     )">
+                     <div class="left">
+                     <span class="icon">🐶</span>
+                     <div class="text">
+                      <strong>Pets</strong>
+                      <p>
+                        <%= currUser.profile?.pet || "Not added" %>
+                      </p>
+                      </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+
+                    <div class="option" onclick="openModal(
+                        'school',
+       'Where did you go to school?',
+       'Whether it’s home school, secondary school or trade school, name the school that made you who you are.',
+       'Where I went to school'
+     )">
+                      <div class="left">
+                      <span class="icon">🎓</span>
+                      <div class="text">
+                      <strong>Where I went to school</strong>
+                      <p>
+                        <%= currUser.profile?.school || "Not added" %>
+                      </p>
+                      </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+
+                    <div class="option" onclick="openModal(
+                        'fun',
+       'What’s a fun fact about you?',
+       'Share something unique or unexpected about you. Example: I was in a music video or I’m a juggler.',
+       'My fun fact:'
+     )">
+                      <div class="left">
+                      <span class="icon">✨</span>
+                      <div class="text">
+                      <strong>My fun fact</strong>
+                      <p>
+                        <%= currUser.profile?.fun || "Not added" %>
+                      </p>
+                    </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+
+                    <div class="option" onclick="openModal(
+                      'time',
+       'What do you spend too much time doing?',
+       'Share an activity or hobby you spend lots of free time on. Example: Watching cat videos or playing chess.',
+       'I spend too much time:'
+     )">
+                      <div class="left">
+                      <span class="icon">⏳</span>
+                      <div class="text">
+                      <strong>I spend too much time</strong>
+                      <p>
+                        <%= currUser.profile?.time || "Not added" %>
+                      </p>
+                      </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+
+                    <div class="option" onclick="openModal(
+                      'skill',
+       'What’s your most useless skill?',
+       'Share a surprising but pointless talent you have. Example: Shuffling cards with one hand.',
+       'My most useless skill:'
+     )">
+                      <div class="left">
+                      <span class="icon">🧠</span>
+                      <div class="text">
+                      <strong>My most useless skill</strong>
+                      <p>
+                        <%= currUser.profile?.skill || "Not added" %>
+                      </p>
+                      </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+
+                    <div class="option" onclick="openModal(
+                      'song',
+       'What was your favourite song in secondary school?',
+       'However embarrassing, share the tune you listened to on repeat as a teenager.',
+       'My favourite song in secoundary school:'
+     )">
+                      <div class="left">
+                      <span class="icon">🎵</span>
+                      <div class="text">
+                      <strong>My favourite song in secoundary school</strong>
+                      <p>
+                        <%= currUser.profile?.song || "Not added" %>
+                      </p>
+                      </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+
+                    <div class="option" onclick="openModal(
+                      'observe',
+       'What are you obsessed with?',
+       'Share whatever you can’t get enough of – in a good way. Example: Baking rosemary focaccia.',
+       'I am obsered with:'
+     )">
+                      <div class="left">
+                      <span class="icon">❤️</span>
+                      <div class="text">
+                      <strong>I am obsered with:</strong>
+                      <p>
+                        <%= currUser.profile?.observe || "Not added" %>
+                      </p>
+                      </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+
+                    <div class="option" onclick="openModal(
+                      'biography',
+       'What would your biography title be?',
+       'If someone wrote a book about your life, what would they call it? Example: Born to Roam or Chronicles of a Dog Mum.',
+       'My biography title would be:'
+     )">
+                      <div class="left">
+                      <span class="icon">📖</span>
+                      <div class="text">
+                      <strong>My biography title would be:</strong>
+                      <p>
+                        <%= currUser.profile?.biography || "Not added" %>
+                      </p>
+                      </div>
+                      </div>
+                      <span class="chevron">›</span>
+                    </div>
+                    </div>
+                  </div>
+                  <button id="doneBtn" class="done-btn">Done</button>
+
+                </div>
+
+                <% } %>
+
+                  <% if (!editMode) { %>
+                    <div class="complete-box">
+                      <h3>Complete your profile</h3>
+                      <p>
+                        Your Wanderlust profile is an important part of every reservation.
+                        Create yours to help hosts and guests get to know you.
+                      </p>
+                      <a href="/profile/about?editMode=true" class="get-started-btn">
+                        Get started
+                      </a>
+
+                    </div>
+                    <% } %>
+          </div>
+          
+    </div>
+
+    <!-- COMMON MODAL -->
+    <div id="profileModal" class="modal-overlay" style="display:none;">
+      <div class="modal-box">
+        <button class="close-btn" onclick="closeModal()">✕</button>
+
+        <h3 id="modalTitle">Title</h3>
+        <p id="modalDesc" class="modal-desc"></p>
+
+        <form id="modalForm">
+          <input type="hidden" id="modalField" name="field" />
+          <input type="text" id="modalInput" name="value" maxlength="40" />
+
+          <button type="submit" class="save-btn">Save</button>
+        </form>
+
+      </div>
+    </div>
+
+
+    <script>
+      const fileInput = document.querySelector(
+        'input[name="profileImage"]'
+      );
+
+      if (fileInput) {
+        fileInput.addEventListener("change", () => {
+          fileInput.closest("form").submit();
+        });
+      }
+    </script>
+
+    <script>
+      function enableNameEdit() {
+        document.getElementById("profileName").style.display = "none";
+        const form = document.getElementById("nameEditForm");
+        form.style.display = "block";
+        const input = document.getElementById("nameInput");
+        input.focus();
+        input.select();
+      }
+
+      function submitName() {
+        document.getElementById("nameEditForm").submit();
+      }
+
+      function handleEnter(e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          submitName();
+        }
+      }
+    </script>
+
+    <script>
+      let activeField = null;
+
+      const tempProfile = {
+        birth: "",
+        work: "",
+        travel: "",
+        pet: "",
+        school: "",
+        fun: "",
+        time: "",
+        skill: "",
+        song: "",
+        observe: "",
+        biography: ""
+      };
+    </script>
+
+
+    <script>
+      function openModal(field, title, desc, placeholder) {
+        document.getElementById("modalTitle").innerText = title;
+        document.getElementById("modalDesc").innerText = desc;
+        document.getElementById("modalInput").placeholder = placeholder;
+
+        document.getElementById("modalField").value = field;
+
+        document.getElementById("profileModal").style.display = "flex";
+      }
+      function closeModal() {
+        document.getElementById("modalInput").value = "";
+        document.getElementById("profileModal").style.display = "none";
+      }
+
+      document
+        .getElementById("modalForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const field = document.getElementById("modalField").value;
+          const value = document.getElementById("modalInput").value;
+
+          const res = await fetch("/profile/update", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ field, value })
+          });
+
+          if (res.ok) {
+            location.reload();
+          }
+          closeModal();
+        });
+    </script>
+
+    <script>
+      document.getElementById("doneBtn").addEventListener("click", async () => {
+        await fetch("/profile/about", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(tempProfile)
+        });
+
+        window.location.href = "/profile/about";
+      });
+    </script>
+
+    <script>
+  function toggleDetails() {
+    const el = document.getElementById("extraDetails");
+    el.style.display = el.style.display === "none" ? "block" : "none";
+  }
+</script>

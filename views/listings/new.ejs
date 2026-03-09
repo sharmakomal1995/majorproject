@@ -1,43 +1,128 @@
 <% layout ("/layouts/boilerplate") %>
-<div class="row">
-    <div class="col-8 offset-2">
-        <br><br>
-    <h3>Create a New listing :</h3>
-    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-        <input name="listing[title]" placeholder="Add a catchy title" type="text" class="form-control" required>
-        <div class="valid-feedback">Title looks good!</div>    
+    <div class="row">
+        <div class="col-8 offset-2">
+            <br><br>
+            <h3>Create a New listing :</h3>
+            <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input name="listing[title]" placeholder="Add a catchy title" type="text" class="form-control"
+                        required>
+                    <div class="valid-feedback">Title looks good!</div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">description</label>
+                    <textarea name="listing[description]" class="form-control" required></textarea>
+                    <div class="invalid-feedback">Please enter a short description</div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">uplode listing image</label>
+                    <input name="listing[images]" multiple type="file" class="form-control" required>
+
+                </div>
+                <div class="mb-3">
+                    <label for="category">Category</label>
+                    <select name="listing[category]" id="category" required>
+                        <option value="">Select Category</option>
+                        <option value="trending">Trending</option>
+                        <option value="rooms">Rooms</option>
+                        <option value="iconic">Iconic Cities</option>
+                        <option value="mountains">Mountains</option>
+                        <option value="castles">Castles</option>
+                        <option value="pools">Amazing Pools</option>
+                        <option value="camping">Camping</option>
+                        <option value="farms">Farms</option>
+                        <option value="arctic">Arctic</option>
+                        <option value="domes">Domes</option>
+                        <option value="boats">Boats</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="price" class="form-label">Price</label>
+                        <input name="listing[price]" placeholder="1200" type="number" class="form-control" required>
+                        <div class="invalid-feedback">Enter a valid price</div>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" name="listing[isGuestFavourite]"
+                            id="guestFavourite">
+                        <label class="form-check-label" for="guestFavourite">Guest Favourite</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="maxGuests" class="form-label">Max Guests</label>
+                        <input type="number" class="form-control" id="maxGuests" name="listing[maxGuests]" min="1"
+                            required>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label">Bedrooms</label>
+                            <input type="number" name="listing[bedrooms]" class="form-control" min="1">
+                        </div>
+
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label">Beds</label>
+                            <input type="number" name="listing[beds]" class="form-control" min="1">
+                        </div>
+
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label">Bathrooms</label>
+                            <input type="number" name="listing[bathrooms]" class="form-control" min="1">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 col-md-8">
+                        <label for="country" class="form-label">Country</label>
+                        <input id="country" name="listing[country]" placeholder="India" type="text" class="form-control"
+                            required>
+                        <div class="invalid-feedback">Enter a valid country name</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input id="city" name="listing[city]" placeholder="enter city" type="text" class="form-control"
+                        required>
+                    <div class="invalid-feedback">Enter a valid city</div>
+
+                    <div class="mb-3">
+                        <label class="form-label">State</label>
+                        <input type="text" id="state" name="listing[state]" class="form-control"
+                            placeholder="Enter state" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>The space</label>
+                        <textarea name="listing[space]" class="form-control"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Guest access</label>
+                        <textarea name="listing[guestAccess]" class="form-control"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>During your stay</label>
+                        <textarea name="listing[duringStay]" class="form-control"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Other things to note</label>
+                        <textarea name="listing[otherThings]" class="form-control"></textarea>
+                    </div>
+
+                    <div id="map" data-coordinates="[78.9629,20.5937]" data-token="<%= process.env.MAPBOX_TOKEN %>"
+                        style="height: 300px;">
+                    </div>
+                    <input type="hidden" name="listing[longitude]" id="longitude">
+                    <input type="hidden" name="listing[latitude]" id="latitude">
+                </div>
+                <button class="btn btn-dark add-btn">Add</button>
+                <br><br><br>
+            </form>
+        </div>
     </div>
-        <div class="mb-3">
-            <label for="description" class="form-label">description</label>
-            <textarea name="listing[description]" class="form-control" required></textarea>
-        <div class="invalid-feedback">Please enter a short description</div>
-        </div>
-        <div class="mb-3">
-            <label for="image" class="form-label">uplode listing image</label>
-            <input name="listing[image]" type="file" class="form-control"> 
-            required  
-        </div>
-        <div class="row">
-            <div class="mb-3 col-md-4">
-            <label for="price" class="form-label">Price</label>
-            <input name="listing[price]" placeholder="1200" type="number" class="form-control" required>
-        <div class="invalid-feedback">Enter a valid price</div>
-        </div>
-        <div class="mb-3 col-md-8">
-            <label for="country" class="form-label">Country</label>
-            <input name="listing[country]" placeholder="India" type="text" class="form-control" required>
-        <div class="invalid-feedback">Enter a valid country name</div>
-        </div>
-    </div>
-        <div class="mb-3">
-            <label for="location" class="form-label">Location</label>
-            <input name="listing[location]" placeholder="enter location" type="text" class="form-control" required>
-            <div class="invalid-feedback">Enter a valid location</div>
-        </div>
-        <button class="btn btn-dark add-btn">Add</button>
-        <br><br><br>
-    </form>
-    </div>
-</div>
+
+    <script>
+        const mapToken = "<%= process.env.MAPBOX_TOKEN %>";
+    </script>
+
+    <script src="/js/newListingMap.js"></script>

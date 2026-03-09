@@ -1,83 +1,991 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row mt-3">
-    <div class="col-8 offset-3">
-        <h3><%= listing.title %> :</h3>
-    </div>
-    <div class="card col-6 offset-3 show-card listing-card" >
-        <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
-    <div class="card-body">
-        <p class="card-text">Owned By:<i><b><%= listing.owner.username %></b></i></p>
-        <p class="card-text">
-            <%= listing.description %> </p>
-            <p>&#8377; <%= listing.price.toLocaleString("en-IN") %></p>
-            <p><%= listing.location %></p>
-            <p><%= listing.country %></p>
-    </div>
-    </div>
-    <br>
-        <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
-            <div class="btns">
-        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
-    
-        <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
-            <button class="btn btn-dark  offset-5">Delete</button>
-        </form>
-    </div>
-        <% } %>
-        
-   <div class="col-8 offset-3 mb-3">
-        <hr/>
-        <% if(currUser) { %> 
-        <h4>Leave a Review</h4>
-        <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
-            <div class="mb-3 mt-3">
-                <label for="rating" class="form-label">Rating</label>
-            <fieldset class="starability-slot">
-            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-            <label for="first-rate1" title="Terrible">1 star</label>
-            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-            <label for="first-rate2" title="Not good">2 stars</label>
-            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-            <label for="first-rate3" title="Average">3 stars</label>
-            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-            <label for="first-rate4" title="Very good">4 stars</label>
-            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-            <label for="first-rate5" title="Amazing">5 stars</label>
-            </fieldset>
-            </div>
-            <div class="mb-3 mt-3">
-                <label for="comment" class="form-label">Comments</label>
-                <textarea
-                name="review[comment]"
-                id="comment"
-                cols="20"
-                rows="5"
-                class="form-control"
-                required
-                ></textarea>
-                <div class="invalid-feedback">Please submit some comments for review</div>
-            </div>
-            <button class="btn btn-outline-dark">Submit</button>
-        </form>
-        <hr/>
-    <% } %>
-        
 
-        <p><b>All Reviews</b></p>
-        <div class="row">
-            <% for(review of listing.reviews) { %>
-                <div class="card col-5 ms-3 mb-3">
-                 <div class="card-body">
-                    <h5 class="card-title">@<%= review.author.username %></h5>
-                    <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
-                    <p class="card-text"><%= review.comment %></p>
-                     </div>
-                 <form class="mb-3" method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-                    <button class="btn btn-sm btn-dark">Delete</button>
-                 </form>
+<%
+let isSaved = false;
+
+if (currUser && currUser.wishlist) {
+    isSaved = currUser.wishlist.some(id => id.toString() === listing._id.toString());
+}
+%>
+
+    <div class="show-container mt-3">
+        <div class="row gx-0">
+            <div class="col-12 px-0">
+                <div class="title-share-wrapper mb-3">
+                    <h3 class="show-listing-title ">
+                        <%= listing.title %>
+                    </h3>
+                    <div class="share-save">
+                        <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#shareModal">
+                            <i class="fa-solid fa-share"></i>
+                            <span>Share</span>
+                        </button>
+                        <button class="icon-btn" id="saveBtn" data-id="<%= listing._id %>">
+                            <i class="<%= isSaved ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
+                            <span>Save</span>
+                        </button>
+                    </div>
                 </div>
-            <% } %>
+                <div class="airbnb-gallery" id="photosSection">
+                    <div class="gallery-main">
+                        <% if (listing.images && listing.images.length> 0) { %>
+                            <img src="<%= listing.images[0].url %>" alt="listing image">
+                            <% } else { %>
+                                <img src="/images/default.jpg" alt="default image">
+                                <% } %>
+                    </div>
+
+                    <% if (listing.images && listing.images.length> 1) { %>
+                        <div class="gallery-side">
+                            <% listing.images.slice(1,5).forEach(img=> { %>
+                                <img src="<%= img.url %>" alt="listing image">
+                                <% }) %>
+                        </div>
+                        <% } %>
+                            <% if (listing.images && listing.images.length> 5) { %>
+                                <button class="show-all" onclick="openGallery()">Show all photos</button>
+                                <% } %>
+                </div>
+                <div id="photoModal" class="photo-modal">
+                    <div class="photo-header">
+                        <span class="back-gallery" onclick="closeGallery()">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </span>
+                        <h3>Photo tour</h3>
+                    </div>
+
+                    <div class="modal-content">
+                        <% listing.images.forEach(img=> { %>
+                            <img src="<%= img.url %>" alt="listing photo">
+                            <% }) %>
+                    </div>
+                </div>
+            </div>
+            <div class="show-listing-header">
+                <h2>
+                    Entire rental unit in
+                    <%= listing.city %>, <%= listing.country %>
+                </h2>
+
+                <p class="show-listing-info">
+                    <%= listing.maxGuests %> guests ·
+                        <%= listing.bedrooms %> bedroom ·
+                            <%= listing.beds %> bed ·
+                                <%= listing.bathrooms %> bathroom
+                </p>
+            </div>
         </div>
-    </div>
-</div>
+        <div id="sectionNavbar" class="section-navbar">
+            <div class="section-inner">
+                <a href="#photosSection">Photos</a>
+                <a href="#amenitiesSection">Amenities</a>
+                <a href="#reviewsSection">Reviews</a>
+                <a href="#locationSection">Location</a>
+            </div>
+        </div>
+        <div class="show-wrapper">
+            <div class="show-listing-container">
+                <div class="show-listing-left">
+                    <div class="guest-fav-box mt-4 mb-4">
+                        <div class="fav-left">
+                            <span class="fav-icon"><i class="fa-solid fa-seedling"></i></span>
+                            <div class="fav-text">
+                                <strong>Guest favourite</strong>
+                                <i class="fa-solid fa-seedling"></i>
+                                <span class="fav-desc">
+                                    One of the most loved homes on Wanderlust, according to guests
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="fav-right">
+                            <div class="rating">
+                                <strong>
+                                    <%= listing.reviews.length> 0
+                                        ? (listing.reviews.reduce((acc, r) => acc + r.rating, 0) /
+                                        listing.reviews.length).toFixed(2)
+                                        : "New" %>
+                                </strong>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                            <div class="review-count">
+                                <strong>
+                                    <%= listing.reviews.length %>
+                                </strong><br>
+                                <small><b>Reviews</b></small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="host-section mt-3">
+
+                        <!-- Host row -->
+                        <div class="host-row d-flex align-items-center mb-3">
+
+                            <img src="<%= listing.owner.profileImage?.url 
+                                    ? listing.owner.profileImage.url
+                                    : `https://ui-avatars.com/api/?name=${listing.owner.username}&background=random` %>"
+                                class="host-img">
+                            <div class="host-info">
+                                <div class="host-name">
+                                    Owned by <strong>
+                                        <%= listing.owner.username %>
+                                    </strong>
+                                </div>
+
+                                <div class="host-time text-muted">
+                                    Hosting since <%= hostSince %>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Highlights -->
+                        <div class="highlight-item">
+                            <i class="fa-solid fa-trophy"></i>
+                            <strong>Top 10% of homes</strong>
+                            <div class="subtext">This home is highly ranked based on ratings, reviews and
+                                reliability.
+                            </div>
+                        </div>
+
+                        <div class="highlight-item">
+                            <i class="fa-solid fa-key"></i>
+                            <strong>Exceptional check-in experience</strong>
+                            <div class="subtext">Recent guests gave the check-in process a 5-star rating.</div>
+                        </div>
+
+                        <div class="highlight-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <strong>Beautiful area</strong>
+                            <div class="subtext">Guests love this home’s scenic location.</div>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fa-solid fa-snowflake"></i>
+                            <strong>Designed for staying cool</strong>
+                            <div class="subtext">Beat the heat with the A/C and ceiling fan.</div>
+                        </div>
+
+                        <div class="highlight-item">
+                            <i class="fa-solid fa-lock"></i>
+                            <strong>Self check-in</strong>
+                            <div class="subtext">Check yourself in with the keypad.</div>
+                        </div>
+
+                        <div class="highlight-item">
+                            <i class="fa-solid fa-crown"></i>
+                            <strong>
+                                <%= listing.owner.username %> is a Superhost
+                            </strong>
+                            <div class="subtext">Superhosts are experienced, highly rated Hosts.</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <%= listing.description %>
+                        </p>
+                        <p><b>The space...</b></p>
+                        <button class="show-more-btn" onclick="openAboutPopup()">
+                            Show more
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="amenities-section" id="amenitiesSection">
+                        <h3>What this place offers</h3>
+                        <div class="amenities-grid" id="amenitiesList">
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-wifi"></i>
+                                <span>Wifi</span>
+                            </div>
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-car"></i>
+                                <span>Free Parking</span>
+                            </div>
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-snowflake"></i>
+                                <span>AC</span>
+                            </div>
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-tv"></i>
+                                <span>TV</span>
+                            </div>
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-bell"></i>
+                                <span>Smoke alarm</span>
+                            </div>
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-kitchen-set"></i>
+                                <span>Kitchen</span>
+                            </div>
+
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-snowflake"></i>
+                                <span>Refrigerator</span>
+                            </div>
+
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-shirt"></i>
+                                <span>Washing machine</span>
+                            </div>
+
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-fire-burner"></i>
+                                <span>Gas stove</span>
+                            </div>
+
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-water-ladder"></i>
+                                <span>Hot water</span>
+                            </div>
+
+                            <div class="amenity-item">
+                                <i class="fa-solid fa-shield-halved"></i>
+                                <span>Security cameras</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="not-allowed-section">
+
+                        <div class="amenity-item not-allowed">
+                            <i class="fa-solid fa-paw"></i>
+                            <span>Pets not allowed</span>
+                        </div>
+
+                        <div class="amenity-item not-allowed">
+                            <i class="fa-solid fa-smoking"></i>
+                            <span>Smoking not allowed</span>
+                        </div>
+
+                        <div class="amenity-item not-allowed">
+                            <i class="fa-solid fa-champagne-glasses"></i>
+                            <span>Parties not allowed</span>
+                        </div>
+
+                        <div class="amenity-item not-allowed">
+                            <i class="fa-solid fa-music"></i>
+                            <span>No loud music</span>
+                        </div>
+
+                        <div class="amenity-item not-allowed">
+                            <i class="fa-solid fa-user-group"></i>
+                            <span>No outside guests</span>
+                        </div>
+                        <button class="show-amenities-btn" onclick="toggleAmenities()">
+                            Show all amenities
+                        </button>
+                    </div>
+
+                    <br>
+                    <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+                        <div class="listing-owner-actions">
+                            <a href="/listings/<%= listing._id %>/edit" class="listing-edit-btn">Edit</a>
+
+                            <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
+                                <button class="listing-delete-btn">Delete</button>
+                            </form>
+                        </div>
+                        <% } %>
+                </div>
+                <div class="show-listing-right">
+
+                    <div class="booking-card">
+                        <h3 id="bookingHeading">Add dates for prices</h3>
+
+                        <form action="/bookings/<%= listing._id %>/checkout" method="GET">
+
+                            <div class="date-row">
+                                <div class="date-box">
+                                    <label>CHECK-IN</label>
+                                    <input type="date" id="listingCheckIn" name="checkIn" required>
+                                </div>
+
+                                <div class="date-box">
+                                    <label>CHECKOUT</label>
+                                    <input type="date" id="listingCheckOut" name="checkOut" required>
+                                </div>
+                            </div>
+
+                            <div class="booking-guest-wrapper">
+                                <div class="booking-guest-display">
+                                    <label>GUESTS</label>
+                                    <p id="bookingGuestSummary">1 guest</p>
+                                </div>
+
+                                <div class="booking-guest-dropdown" id="bookingGuestDropdown">
+
+                                    <!-- Adults -->
+                                    <div class="booking-guest-row">
+                                        <div>
+                                            <strong>Adults</strong>
+                                            <p>Ages 13+</p>
+                                        </div>
+                                        <div class="booking-counter">
+                                            <button type="button">-</button>
+                                            <span class="adultsCount">1</span>
+                                            <button type="button">+</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Children -->
+                                    <div class="booking-guest-row">
+                                        <div>
+                                            <strong>Children</strong>
+                                            <p>Ages 2–12</p>
+                                        </div>
+                                        <div class="booking-counter">
+                                            <button type="button">-</button>
+                                            <span class="childrenCount">0</span>
+                                            <button type="button">+</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Infants -->
+                                    <div class="booking-guest-row">
+                                        <div>
+                                            <strong>Infants</strong>
+                                            <p>Under 2</p>
+                                        </div>
+                                        <div class="booking-counter">
+                                            <button type="button">-</button>
+                                            <span class="infantsCount">0</span>
+                                            <button type="button">+</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pets -->
+                                    <div class="booking-guest-row">
+                                        <div>
+                                            <strong>Pets</strong>
+                                        </div>
+                                        <div class="booking-counter">
+                                            <button type="button">-</button>
+                                            <span class="petsCount">0</span>
+                                            <button type="button">+</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="adults" id="hiddenAdults" value="1">
+                            <input type="hidden" name="children" id="hiddenChildren" value="0">
+                            <input type="hidden" name="infants" id="hiddenInfants" value="0">
+                            <input type="hidden" name="pets" id="hiddenPets" value="0">
+
+                            <button type="submit" id="availabilityBtn" class="availability-btn">
+                                Check availability
+                            </button>
+
+                        </form>
+                    </div>
+                    <p style="margin-top:5px; color:#666;">
+                        <i class="fa-solid fa-user-group" style="margin-right:6px;"></i>
+
+                        <% if (bookingCount> 1) { %>
+                            <strong>
+                                <%= bookingCount %>
+                            </strong>
+                            people have already booked this place
+                            <% } else if (bookingCount===1) { %>
+                                <strong>1</strong>
+                                person has already booked this place
+                                <% } else { %>
+                                    Be the first to book this place!
+                                    <% } %>
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+        <hr class="mobile-booking-divider">
+
+        <section class="airbnb-rating-section" id="reviewsSection">
+
+            <!-- BIG CENTER RATING -->
+            <div class="rating-top">
+                <h1>
+                    <i class="fa-solid fa-star"></i>
+                    <%= reviewCount===0 ? "New" : averages.rating %>
+                </h1>
+
+                <% if (reviewCount>= 5 && averages.rating >= 4.7) { %>
+                    <p class="guest-fav"><i class="fa-solid fa-seedling"></i>Guest favourite<i
+                            class="fa-solid fa-seedling"></i></p>
+                    <% } %>
+
+                        <p class="rating-desc">
+                            This home is in the top 5% of eligible listings
+                            based on ratings, reviews and reliability
+                        </p>
+            </div>
+            <div class="rating-divider"></div>
+
+            <!-- CATEGORY + OVERALL WRAPPER -->
+            <div class="rating-bottom">
+
+                <!-- LEFT SIDE: OVERALL RATING BARS -->
+                <div class="overall-rating">
+                    <h4>Overall rating</h4>
+
+                    <div class="rating-bar"><span>5</span>
+                        <div class="bar">
+                            <div class="bar-fill" data-width="<%= starPercentages[5] || 0 %>"></div>
+                        </div>
+                    </div>
+                    <div class="rating-bar"><span>4</span>
+                        <div class="bar">
+                            <div class="bar-fill" data-width="<%= starPercentages[4] || 0 %>"></div>
+                        </div>
+                    </div>
+                    <div class="rating-bar"><span>3</span>
+                        <div class="bar">
+                            <div class="bar-fill" data-width="<%= starPercentages[3] || 0 %>"></div>
+                        </div>
+                    </div>
+                    <div class="rating-bar"><span>2</span>
+                        <div class="bar">
+                            <div class="bar-fill" data-width="<%= starPercentages[2] || 0 %>"></div>
+                        </div>
+                    </div>
+                    <div class="rating-bar"><span>1</span>
+                        <div class="bar">
+                            <div class="bar-fill" data-width="<%= starPercentages[1] || 0 %>"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE: CATEGORY RATINGS -->
+                <div class="category-row">
+
+                    <div class="category-item">
+                        <span>Cleanliness</span>
+                        <strong>
+                            <%= averages.cleanliness %>
+                        </strong>
+                        <i class="fa-solid fa-broom"></i>
+                    </div>
+
+                    <div class="category-item">
+                        <span>Accuracy</span>
+                        <strong>
+                            <%= averages.accuracy %>
+                        </strong>
+                        <i class="fa-solid fa-check-circle"></i>
+                    </div>
+
+                    <div class="category-item">
+                        <span>Check-in</span>
+                        <strong>
+                            <%= averages.checkIn %>
+                        </strong>
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+
+                    <div class="category-item">
+                        <span>Communication</span>
+                        <strong>
+                            <%= averages.communication %>
+                        </strong>
+                        <i class="fa-solid fa-comment"></i>
+                    </div>
+
+                    <div class="category-item">
+                        <span>Location</span>
+                        <strong>
+                            <%= averages.location %>
+                        </strong>
+                        <i class="fa-solid fa-map"></i>
+                    </div>
+
+                    <div class="category-item">
+                        <span>Value</span>
+                        <strong>
+                            <%= averages.value %>
+                        </strong>
+                        <i class="fa-solid fa-tag"></i>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="rating-divider"></div>
+        </section>
+        <div class="review-form-wrapper">
+            <% if(currUser) { %>
+                <h4>Leave a Review</h4>
+                <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
+                    <div class="mb-3 mt-3">
+                        <label for="rating" class="form-label"><b>Overall Rating</b></label>
+                        <fieldset class="starability-slot">
+                            <input type="radio" id="first-rate1" name="review[rating]" value="1" required />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                    </div>
+
+                    <h5><b>Rate your experience</b></h5>
+
+                    <div class="review-rating-grid">
+
+                        <% const categories=[ { label:"Cleanliness", name:"cleanliness" }, { label:"Accuracy",
+                            name:"accuracy" }, { label:"Check-in", name:"checkIn" }, { label:"Communication",
+                            name:"communication" }, { label:"Location", name:"location" }, { label:"Value", name:"value"
+                            } ]; %>
+
+                            <% categories.forEach(cat=>{ %>
+
+                                <div class="review-rating-row">
+
+                                    <span class="review-rating-label">
+                                        <%= cat.label %>
+                                    </span>
+
+                                    <div class="review-stars" data-name="<%= cat.name %>">
+
+                                        <% for(let i=1;i<=5;i++){ %>
+                                            <i class="review-star fa-regular fa-star" data-value="<%= i %>"></i>
+                                            <% } %>
+
+                                                <input type="hidden" name="review[<%= cat.name %>]" required>
+
+                                    </div>
+
+                                </div>
+
+                                <% }) %>
+
+                    </div>
+
+
+                    <div class="mb-3 mt-3">
+                        <label for="comment" class="form-label"><b>Comments</b></label>
+                        <textarea name="review[comment]" id="comment" cols="20" rows="5"
+                            placeholder="Please submit your valuable reviews.." class="form-control"
+                            required></textarea>
+                        <div class="invalid-feedback">Please submit some comments for review</div>
+                    </div>
+                    <button class="btn btn-outline-dark">Submit</button>
+                </form>
+                <% } %>
+        </div>
+        <hr>
+        <div class="show-container">
+            <div class="reviews-grid">
+
+                <% for(review of listing.reviews) { %>
+
+                    <div class="review-card">
+
+                        <!-- Profile -->
+                        <div class="review-header">
+                            <img src="<%= review.author.profileImage?.url 
+            ? review.author.profileImage.url
+            : `https://ui-avatars.com/api/?name=${review.author.username}&background=random` %>" class="profile-img">
+
+                            <div class="review-user-info">
+                                <h5>
+                                    <%= review.author.username %>
+                                </h5>
+                                <span class="review-time">
+                                    <%= timeAgo(review.createdAt) %>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Stars -->
+                        <div class="stars">
+                            <% for(let i=1;i<=5;i++){ %>
+                                <%= i <=review.rating ? "★" : "☆" %>
+                                    <% } %>
+                        </div>
+
+                        <!-- Comment -->
+                        <p class="review-comment">
+                            <%= review.comment %>
+                        </p>
+
+                        <% if(currUser && review.author._id.equals(currUser._id)) { %>
+
+                            <!-- Edit -->
+                            <button type="button" class="review-edit-btn"
+                                onclick="openCommentPopup('<%= review._id %>')">
+                                Edit
+                            </button>
+
+                            <!-- Delete -->
+                            <form method="POST"
+                                action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                style="display:inline;">
+                                <button type="submit" class="review-delete-btn">Delete</button>
+                            </form>
+
+                            <% } %>
+                    </div>
+
+                    <!-- POPUP (OUTSIDE CARD) -->
+                    <div class="commentPopupOverlay" id="popup-<%= review._id %>">
+                        <div class="commentPopupBox">
+
+                            <div class="commentPopupHeader">
+                                <span>Edit your review</span>
+                                <button type="button" onclick="closeCommentPopup('<%= review._id %>')"
+                                    class="commentPopupClose">✕</button>
+                            </div>
+
+                            <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=PUT"
+                                method="POST">
+
+                                <textarea name="review[comment]"
+                                    class="commentPopupInput"><%= review.comment %></textarea>
+
+                                <!-- Rating -->
+                                <div class="starGroup">
+                                    <label>Rating</label>
+                                    <div class="starRating">
+                                        <% for(let i=5;i>=1;i--){ %>
+                                            <input type="radio" id="rating-<%= i %>-<%= review._id %>"
+                                                name="review[rating]" value="<%= i %>" <%=review.rating==i?"checked":""
+                                                %>>
+                                            <label for="rating-<%= i %>-<%= review._id %>">★</label>
+                                            <% } %>
+                                    </div>
+
+                                    <!-- CATEGORY RATINGS -->
+                                    <div class="rating-grid">
+
+                                        <% const categories=[ {label:"Cleanliness", name:"cleanliness",
+                                            value:review.cleanliness}, {label:"Accuracy", name:"accuracy",
+                                            value:review.accuracy}, {label:"Check-in", name:"checkIn",
+                                            value:review.checkIn}, {label:"Communication", name:"communication",
+                                            value:review.communication}, {label:"Location", name:"location",
+                                            value:review.location}, {label:"Value", name:"value", value:review.value} ];
+                                            %>
+
+                                            <% categories.forEach(cat=> { %>
+
+                                                <div class="starGroup">
+
+                                                    <label>
+                                                        <%= cat.label %>
+                                                    </label>
+
+                                                    <div class="starRating">
+
+                                                        <% for(let i=5;i>=1;i--){ %>
+
+                                                            <input type="radio"
+                                                                id="<%= cat.name %>-<%= i %>-<%= review._id %>"
+                                                                name="review[<%= cat.name %>]" value="<%= i %>"
+                                                                <%=cat.value==i ? "checked" : "" %>
+                                                            required>
+
+                                                            <label
+                                                                for="<%= cat.name %>-<%= i %>-<%= review._id %>">★</label>
+
+                                                            <% } %>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <% }) %>
+
+                                    </div>
+                                </div>
+                                <button type="submit" class="commentPopupSubmit">
+                                    Update Review
+                                </button>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <% } %>
+
+            </div>
+            <button class="show-all-reviews-btn" id="showAllReviewsBtn">
+                Show all reviews
+            </button>
+        </div>
+        <div id="locationSection">
+            <h3>Where you’ll be</h3>
+
+            <div id="map" data-coordinates='<%- JSON.stringify(listing.location.coordinates) %>'
+                data-token="<%= process.env.MAPBOX_TOKEN %>" style="height:400px; width:100%; border-radius:12px;">
+            </div>
+        </div>
+        <br />
+        <p class="extra-information">Exact location will be provided after booking.</p>
+        <hr>
+        <!-- ===== Meet your host ===== -->
+        <div class="host-section">
+
+            <h2 class="host-title">Meet your host</h2>
+
+            <div class="host-card">
+
+                <!-- LEFT CARD -->
+                <div class="host-profile">
+
+                    <img src="<%= listing.owner.profileImage?.url 
+                            ? listing.owner.profileImage.url 
+                        : `https://ui-avatars.com/api/?name=${listing.owner.username}&background=random` %>"
+                        class="host-avatar">
+
+                    <h3>
+                        <%= listing.owner.username %>
+                    </h3>
+                    <p class="superhost-badge">★ Superhost</p>
+
+                    <div class="host-stats">
+                        <div>
+                            <strong>
+                                <%= reviewCount %>
+                            </strong>
+                            <span>Reviews</span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                <%= averages.rating %>★
+                            </strong>
+                            <span>Rating</span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                <%= hostSince %>
+                            </strong>
+                            <span>Hosting Since</span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT INFO -->
+                <div class="host-info">
+
+                    <h3>
+                        <%= listing.owner.username %> is a Superhost
+                    </h3>
+
+                    <p class="host-desc">
+                        Superhosts are experienced, highly rated hosts who are committed
+                        to providing great stays for guests.
+                    </p>
+
+                    <div class="host-meta">
+                        <p><i class="fa-solid fa-location-dot" style="color:#105fb9;margin-right:6px;"></i> Lives in
+                            India</p>
+                        <p><i class="fa-solid fa-briefcase" style="color:#530c15;margin-right:6px;"></i>My Work:
+                            Professional host</p>
+                        <br>
+                        <p>
+                            <strong>Host details</strong>
+                        </p>
+
+                        <p>
+                            <i class="fa-solid fa-chart-line" style="color:#10b981;margin-right:6px;"></i>
+                            Response rate: <strong>100%</strong>
+                        </p>
+
+                        <p>
+                            <i class="fa-solid fa-clock" style="color:#f59e0b;margin-right:6px;"></i>
+                            Responds within an hour
+                        </p>
+                    </div>
+                    <br>
+                    <a href="/messages/contact/<%= listing._id %>" class="message-btn">
+                        Message Host
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+        <hr>
+        <br>
+        <br>
+        <h3 class="mb-4">Things to know</h3>
+        <div class="row">
+            <div class="col-md-4 mb-4 things-box">
+                <div class="d-flex align-items-start gap-2">
+                    <i class="bi bi-calender-x fs-4"></i>
+                    <div>
+                        <h6>Cancellation policy</h6>
+
+                        <% if (cancellationDate) { %>
+                            <p>
+                                Free cancellation before
+                                <%= cancellationDate.toLocaleDateString("en-IN", { day: "numeric" , month: "long" }) %>
+                            </p>
+                            <% } else { %>
+                                <p>Select check-in date to see cancellation policy.</p>
+                                <% } %>
+
+                                    <a href="#" class="text-decoration-underline">Learn more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 things-box">
+                <div class="d-flex align-items-start gap-2">
+                    <i class="bi bi-house-door fs-4"></i>
+                    <div>
+                        <h6>House rules</h6>
+                        <p class="text-muted mb-1">
+                            Check-in <%= listing.checkInTime %> <br>
+                                Checkout <%= listing.checkOutTime %> <br>
+                                    <%= listing.maxGuests %> guests maximum
+                        </p>
+                        <a href="#" class="text-decoration-underline">Learn more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 things-box">
+                <div class="d-flex align-items-start gap-2">
+                    <i class="bi bi-shield-check fs-4"></i>
+                    <div>
+                        <h6>Safety & property</h6>
+                        <p class="text-muted mb-1">Carbon monoxide alarm not reported <br>
+                            Exterior security cameras on property
+                        </p>
+                        <a href="#" class="text-decoration-underline">Learn more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About Space Popup -->
+        <div id="aboutPopup" class="about-popup">
+            <div class="about-popup-content">
+
+                <div class="about-header">
+                    <button class="close-popup" onclick="closeAboutPopup()">✕</button>
+                    <h2>About this space</h2>
+                </div>
+
+                <div class="about-body">
+                    <p>
+                        <%= listing.description %>
+                    </p>
+
+                    <% if(listing.space) { %>
+                        <h4>The Space</h4>
+                        <p>
+                            <%= listing.space %>
+                        </p>
+                        <% } %>
+
+                            <% if(listing.guestAccess) { %>
+                                <h4>Guest Access</h4>
+                                <p>
+                                    <%= listing.guestAccess %>
+                                </p>
+                                <% } %>
+
+                                    <% if(listing.duringStay) { %>
+                                        <h4>During your stay</h4>
+                                        <p>
+                                            <%= listing.duringStay %>
+                                        </p>
+                                        <% } %>
+
+                                            <% if(listing.otherThings) { %>
+                                                <h4>Other things to note</h4>
+                                                <p>
+                                                    <%= listing.otherThings %>
+                                                </p>
+                                                <% } %>
+
+
+                                                    <div class="extra-info">
+                                                        <p><strong>Price:</strong> ₹<%= listing.price %>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Location:</strong>
+                                                            <%= listing.city %>,
+                                                                <%= listing.state %>,
+                                                                    <%= listing.country %>
+                                                        </p>
+                                                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="shareModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content share-modal">
+                    <div class="modal-body share-body">
+                        <div class="share-header">
+                            <h5 class="share-heading mb-0">Share this place</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="share-row">
+                            <img src="<%= listing.images[0]?.url || '/default.jpg' %>" class="share-img">
+                            <div class="share-info">
+                                <div class="share-line">
+                                    <span class="share-title">
+                                        <%= listing.title %>
+                                    </span>
+                                    <span class="dot">·</span>
+                                    <span>★ <%= listing.rating || "New" %></span>
+                                    <span class="dot">·</span>
+                                    <span>
+                                        <%= listing.bedrooms %> bedroom ·
+                                            <%= listing.beds %> bed ·
+                                                <%= listing.bathrooms %> bathroom
+                                    </span>
+                                </div>
+                                <div class="share-price">
+                                    ₹<%= listing.price %> night
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- buttons -->
+                        <div class="share-grid">
+
+                            <button class="share-btn" onclick="copyLink()">
+                                <i class="fa-solid fa-link"></i> Copy Link
+                            </button>
+
+                            <a class="share-btn" target="_blank"
+                                href="mailto:?subject=<%= listing.title %>&body=<%= requestUrl %>">
+                                <i class="fa-solid fa-envelope"></i> Email
+                            </a>
+
+                            <a class="share-btn" target="_blank"
+                                href="https://wa.me/?text=<%= encodeURIComponent(listing.title + ' ' + requestUrl) %>">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            </a>
+
+                            <a class="share-btn" target="_blank"
+                                href="https://www.facebook.com/sharer/sharer.php?u=<%= requestUrl %>">
+                                <i class="fa-brands fa-facebook"></i> Facebook
+                            </a>
+
+                            <a class="share-btn" target="_blank"
+                                href="sms:?body=<%= listing.title %> <%= requestUrl %>">
+                                <i class="fa-solid fa-message"></i> Message
+                            </a>
+
+                            <a class="share-btn" target="_blank"
+                                href="https://twitter.com/intent/tweet?text=<%= encodeURIComponent(listing.title) %>&url=<%= requestUrl %>">
+                                <i class="fa-brands fa-x-twitter"></i> Twitter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <script src="/js/show.js"></script>

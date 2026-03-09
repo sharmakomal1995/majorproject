@@ -1,0 +1,48 @@
+<style>
+  .chat-row{
+ display:flex;
+ margin:8px;
+}
+
+.chat-row.me{
+ justify-content:flex-end;
+}
+
+.chat-row.other{
+ justify-content:flex-start;
+}
+
+.chat-bubble{
+ max-width:60%;
+ padding:10px 14px;
+ border-radius:15px;
+ background:#eee;
+}
+
+.chat-row.me .chat-bubble{
+ background:#dcf8c6;
+}
+
+</style>
+
+<h2>Conversation</h2>
+
+<% for(let i=0;i<messages.length;i++){ %>
+
+<% var msg = messages[i]; %>
+<% var isMe = msg.sender.toString() === currentUser._id.toString(); %>
+
+<div class="chat-row <%= isMe ? 'me' : 'other' %>">
+
+  <div class="chat-bubble">
+    <b><%= isMe ? 'You' : 'Guest' %></b>
+    <div><%= msg.text %></div>
+  </div>
+
+</div>
+<% } %>
+<form action="/messages/reply/<%= userId %>/<%= listingId %>" method="POST">
+    <input type="text" name="text" placeholder="Type a message..." required>
+    <button type="submit">Send</button>
+</form>
+

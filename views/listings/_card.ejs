@@ -1,0 +1,84 @@
+<div class="col">
+  <div class="card listing-card border-0">
+
+    <!-- IMAGE + HEART -->
+    <div class="image-wrapper position-relative">
+      <a href="/listings/<%= listing._id %>">
+
+        <% let imageUrl = "/images/default.jpg"; %>
+        <% if (listing.images && listing.images.length > 0) { %>
+            <% imageUrl = listing.images[0].url; %>
+        <% } %>
+
+        <img
+          src="<%= imageUrl %>"
+          class="card-img-top listing-img"
+          alt="listing image"
+        >
+      </a>
+
+      <!-- Guest Favourite badge -->
+      <% if (listing.isGuestFavourite) { %>
+        <span class="badge guest-badge">Guest Favourite</span>
+      <% } %>
+
+      <!-- Wishlist Heart -->
+      <div
+        class="heart-icon
+        <%= currUser && currUser.wishlist.some(
+            id => id.toString() === listing._id.toString()
+        ) ? 'active' : '' %>"
+        data-id="<%= listing._id %>"
+        onclick="toggleHeart(event, this)"
+      >
+        <i class="fa-heart
+          <%= currUser && currUser.wishlist.some(
+              id => id.toString() === listing._id.toString()
+          ) ? 'fa-solid' : 'fa-regular' %>">
+        </i>
+      </div>
+    </div>
+
+    <!-- CARD BODY -->
+    <div class="card-body p-2">
+
+      <!-- TITLE -->
+      <div class="fw-semibold text-truncate">
+        <%= listing.title %>
+      </div>
+
+      <!-- LOCATION -->
+      <div class="text-muted small">
+        <%= listing.location %>
+      </div>
+
+      <!-- PRICE + RATING -->
+      <div class="d-flex justify-content-between align-items-center mt-1">
+
+        <span class="listing-price">
+          ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+        </span>
+
+        <span class="rating small text-muted">
+          <% if (listing.reviews && listing.reviews.length > 0) { %>
+            ⭐
+            <%= (
+              listing.reviews.reduce((sum, r) => sum + r.rating, 0) /
+              listing.reviews.length
+            ).toFixed(1) %>
+            (<%= listing.reviews.length %>)
+          <% } else { %>
+            ⭐ New
+          <% } %>
+        </span>
+
+      </div>
+
+      <!-- TAX -->
+      <div class="tax-text small">
+        Includes 18% GST
+      </div>
+
+    </div>
+  </div>
+</div>

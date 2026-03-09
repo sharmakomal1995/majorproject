@@ -1,0 +1,23 @@
+<% layout ("/layouts/boilerplate") %>
+
+<% bodyClass="profile-view" %>
+
+<div class="profile-page">
+  <%- include("../includes/profileSidebar", { currUser, page: "connections" }) %>
+
+  <div class="profile-content">
+    <h2>Connections</h2>
+
+    <div class="empty-state">
+      <img src="/images/connections.png" alt="Connections" class="empty-img">
+
+      <p class="empty-text">
+        When you join a trip or invite someone, you’ll see their profiles here.
+      </p>
+
+      <a href="/listings" class="primary-btn">Book a trip</a>
+    </div>
+  </div>
+</div>
+
+

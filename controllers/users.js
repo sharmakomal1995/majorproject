@@ -42,3 +42,19 @@ module.exports.logout = (req, res, next) => {
         return res.redirect("/listings");
     });
 };
+
+ module.exports.profile = (req, res) => {
+  if (!req.user) {
+    req.flash("error", "Please login first!");
+    return res.redirect("/login");
+  }
+
+  const editMode = req.query.editMode === "true";
+
+  res.render("users/profile", {
+    currUser: req.user,
+      editMode,
+     page: "about"
+  });
+};
+

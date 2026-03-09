@@ -1,0 +1,128 @@
+<% layout('layouts/boilerplate') %>
+
+    <link rel="stylesheet" href="/css/contact.css">
+
+    <div class="contact-wrapper">
+
+        <!-- LEFT SIDE -->
+        <div class="contact-left">
+
+            <a href="/listings/<%= listing._id %>" class="back-btn">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+
+            <div class="host-header">
+                <img src="<%= listing.owner.profileImage?.url 
+            ? listing.owner.profileImage.url
+            : `https://ui-avatars.com/api/?name=${listing.owner.username}` %>">
+
+                <div>
+                    <h2>Contact <%= listing.owner.username %>
+                    </h2>
+                    <p>Typically responds within an hour</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <h4>Most travellers ask about</h4>
+
+            <div class="faq">
+                <p><b>Getting there</b></p>
+                <ul>
+                    <li>Check-in time for this home starts at 2:00 pm and checkout is at 11:00 am.</li>
+                </ul>
+
+                <p><b>House rules</b></p>
+                <ul>
+                    <li>No parties or events</li>
+                </ul>
+                <p><b>Price and availability</b></p>
+                <ul>
+                    <li>Get a 5% discount on stays longer than a week, or 10% on stays longer than a month.</li>
+                    <li>
+                        <%= listing.owner.username %> home is available.Book soon.
+                    </li>
+                    <li>Cancel up to 5 days before check-in and get a full refund. After that, cancel before check-in
+                        and get a 50% refund, minus the first night and service fee.</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <h4>Still have questions? Message host</h4>
+
+            <div id="chatBox"></div>
+
+            <form id="msgForm">
+                <input name="message" id="msgInput" required>
+                <button>Send message</button>
+            </form>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="contact-right">
+
+            <div class="listing-card">
+
+                <img src="<%= listing.images[0].url %>">
+
+                <div>
+                    <p>
+                        <%= listing.title %>
+                    </p>
+                    <small>
+                        <%= listing.city %>
+                    </small>
+                </div>
+
+                <h4>₹<%= listing.price %> / night</h4>
+
+                <button class="reserve-btn">Reserve</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+  const otherUser = "<%= listing.owner._id %>";
+  const listingId = "<%= listing._id %>";
+
+  async function loadMessages(){
+    const res = await fetch(`/messages/fetch/${otherUser}/${listingId}`);
+    const data = await res.json();
+
+    const box = document.getElementById("chatBox");
+    box.innerHTML="";
+
+    data.forEach(m=>{
+      const div=document.createElement("div");
+
+      if(m.sender === "<%= currentUser._id %>")
+        div.style.textAlign="right";
+
+      div.innerHTML=`<span style="background:#eee;padding:6px 10px;border-radius:10px;display:inline-block;margin:4px">${m.text}</span>`;
+      box.appendChild(div);
+    });
+  }
+
+  setInterval(loadMessages,2000);
+  loadMessages();
+
+  document.getElementById("msgForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+
+    await fetch(`/messages/reply/${otherUser}/${listingId}`,{
+      method:"POST",
+      headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+      body:`text=${msgInput.value}`
+    });
+
+    msgInput.value="";
+    loadMessages();
+  });
+</script>

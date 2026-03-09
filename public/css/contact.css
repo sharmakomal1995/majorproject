@@ -1,0 +1,111 @@
+.contact-wrapper{
+    display:flex;
+    gap:60px;
+    max-width:1100px;
+    margin:40px auto;
+}
+
+.contact-left{
+    flex:2;
+}
+
+.contact-right{
+    flex:1;
+}
+
+.host-header{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.host-header img{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+}
+
+textarea{
+    width:100%;
+    height:130px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    padding:15px;
+    margin-top:10px;
+}
+
+button{
+    margin-top:15px;
+    padding:12px 25px;
+    border:none;
+    border-radius:8px;
+    background:#222;
+    color:white;
+    cursor:pointer;
+}
+
+.listing-card{
+    border:1px solid #ddd;
+    padding:15px;
+    border-radius:15px;
+}
+
+.listing-card img{
+    width:100%;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+.reserve-btn{
+    width:100%;
+    background:#ff385c;
+}
+.back-btn {
+  font-size: 22px;
+  color: #222;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  color: #ff385c;
+}
+
+/* MOBILE FIX */
+@media (max-width:768px){
+
+  .contact-wrapper{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    padding:15px;
+  }
+
+  .contact-left,
+  .contact-right{
+    width:100%;
+  }
+
+  .listing-card{
+    width:100%;
+  }
+
+  .listing-card img{
+    width:100%;
+    height:auto;
+  }
+
+  #chatBox{
+    max-height:200px;
+    overflow-y:auto;
+  }
+
+  #msgForm{
+    display:flex;
+    gap:8px;
+  }
+
+  #msgInput{
+    flex:1;
+  }
+
+}

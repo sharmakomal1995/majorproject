@@ -1,0 +1,10 @@
+<% messages.forEach(msg=>{ %>
+
+<p><%= msg.sender.username %></p>
+<p><%= msg.listing.title %></p>
+
+<a href="/messages/chat/<%= msg.sender._id %>/<%= msg.listing._id %>">
+Open Chat
+</a>
+
+<% }) %>

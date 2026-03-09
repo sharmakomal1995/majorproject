@@ -1,0 +1,23 @@
+<% layout ("/layouts/boilerplate") %>
+
+  <% bodyClass="profile-view" %>
+
+<div class="profile-page">
+  <%- include("../includes/profileSidebar", { currUser, page: "trips" }) %>
+
+  <div class="profile-content">
+    <h2>Past trips</h2>
+
+    <div class="empty-state">
+      <img src="/images/trips.png" alt="Past trips" class="empty-img">
+
+      <p class="empty-text">
+        You’ll find your past reservations here after you’ve taken your first trip.
+      </p>
+
+      <a href="/listings" class="primary-btn">Book a trip</a>
+    </div>
+  </div>
+</div>
+
+

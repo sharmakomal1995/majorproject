@@ -1,0 +1,36 @@
+<style>
+    .timeline{
+ border-left:3px solid #000;
+ margin:20px;
+ padding-left:20px;
+}
+
+.step{
+ position:relative;
+ margin-bottom:20px;
+}
+
+.dot{
+ width:14px;
+ height:14px;
+ background:black;
+ border-radius:50%;
+ position:absolute;
+ left:-27px;
+ top:5px;
+}
+</style>
+
+<h3>Booking Timeline</h3>
+
+<ul>
+  <% booking.timeline.forEach(item => { %>
+    <li>
+      <b><%= item.status %></b>
+      <span>
+        (<%= new Date(item.date).toLocaleString() %>)
+      </span>
+    </li>
+  <% }) %>
+</ul>
+

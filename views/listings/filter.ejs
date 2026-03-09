@@ -1,0 +1,75 @@
+<% layout("layouts/boilerplate") %>
+
+  <div class="container mt-4">
+
+    <h3 class="mb-4 text-capitalize">
+      <%= listings.length %> stays found
+    </h3>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+      <% listings.forEach(listing=> { %>
+        <div class="col">
+          <div class="card listing-card h-100 position-relative">
+
+            <!-- ❤️ Wishlist -->
+            <div class="heart-icon
+  <%= currUser && currUser.wishlist.some(
+      id => id.toString() === listing._id.toString()
+  ) ? 'active' : '' %>" data-id="<%= listing._id %>" onclick="toggleHeart(this)">
+              <i class="fa-heart
+    <%= currUser && currUser.wishlist.some(
+        id => id.toString() === listing._id.toString()
+    ) ? 'fa-solid' : 'fa-regular' %>">
+              </i>
+            </div>
+
+
+            <a href="/listings/<%= listing._id %>">
+              <% let imageUrl="/images/default.jpg" ; %>
+                <% if (listing.images && listing.images.length> 0) { %>
+                  <% imageUrl=listing.images[0].url; %>
+                    <% } %>
+
+                      <img src="<%= imageUrl %>" class="card-img-top" alt="listing image">
+            </a>
+
+            <% if (listing.isGuestFavourite) { %>
+              <span class="badge bg-light text-dark position-absolute m-2">
+                Guest Favourite
+              </span>
+              <% } %>
+
+                <div class="card-body">
+                  <b>
+                    <%= listing.title %>
+                  </b>
+
+                  <div class="d-flex justify-content-between align-items-center mt-1">
+                    <span>
+                      ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+                    </span>
+
+                    <span class="text-muted small">
+                      <% if (listing.reviews && listing.reviews.length> 0) { %>
+                        ⭐
+                        <%= ( listing.reviews.reduce((s, r)=> s + r.rating, 0)
+                          / listing.reviews.length
+                          ).toFixed(1) %>
+                          (<%= listing.reviews.length %>)
+                            <% } else { %>
+                              ⭐ New
+                              <% } %>
+                    </span>
+                  </div>
+
+                  <div class="text-muted small">
+                    <%= listing.state %>
+                  </div>
+                </div>
+          </div>
+        </div>
+        <% }) %>
+
+    </div>
+  </div>

@@ -24,3 +24,16 @@ module.exports.destroyReview = async (req, res) => {
     req.flash("success", "Review Deleted!");
     return res.redirect(`/listings/${id}`);
 };
+
+module.exports.editReview = async (req, res) => {
+    const { id, reviewId } = req.params;
+    const review = await Review.findById(reviewId);
+    res.render("reviews/edit", { review, id });
+};
+
+module.exports.updateReview = async (req, res) => {
+    const { id, reviewId } = req.params;
+    await Review.findByIdAndUpdate(reviewId, req.body.review);
+    req.flash("success", "Review updated!");
+    res.redirect(`/listings/${id}`);
+};

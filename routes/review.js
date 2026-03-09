@@ -17,5 +17,20 @@ router.delete(
     isReviewAuthor,
     wrapAsync(reviewController.destroyReview)
 );
+router.get(
+    "/:reviewId/edit",
+    isLoggedIn,
+    isReviewAuthor,
+    wrapAsync(reviewController.editReview)
+);
+
+router.put(
+    "/:reviewId",
+    isLoggedIn,
+    isReviewAuthor,
+    validateReview,
+    wrapAsync(reviewController.updateReview)
+);
+
 
 module.exports = router;

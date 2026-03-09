@@ -1,0 +1,839 @@
+<style>
+    .checkout-container {
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+        padding: 60px;
+        font-family: system-ui;
+        background: #fafafa;
+    }
+
+    /* LEFT */
+    .checkout-left {
+        width: 450px;
+    }
+
+    .title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .subtitle {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .note {
+        color: #717171;
+        margin-bottom: 30px;
+    }
+
+    .pay-btn {
+        width: 100%;
+        background: #000;
+        color: white;
+        border: none;
+        padding: 18px;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    .pay-btn:hover {
+        background: #222;
+    }
+
+    .terms {
+        font-size: 13px;
+        color: #717171;
+        margin-top: 15px;
+    }
+
+    /* RIGHT CARD */
+    .checkout-right {
+        width: 380px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .listing-info {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .listing-img {
+        width: 90px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .rating {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        margin: 12px 0;
+        font-size: 15px;
+    }
+
+    .total {
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #eee;
+        margin: 18px 0;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .label {
+        display: block;
+        font-weight: 600;
+    }
+
+    .change-btn {
+        padding: 6px 14px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+        text-decoration: none;
+        color: black;
+    }
+
+    .change-btn:hover {
+        background: #f7f7f7;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .price-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 15px;
+    }
+
+    .price-total {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 600;
+        font-size: 17px;
+        margin-top: 10px;
+    }
+
+    .divider {
+        border: none;
+        border-top: 1px solid #eee;
+        margin: 18px 0;
+    }
+
+    .currency {
+        border-bottom: 1px solid black;
+    }
+
+    .payment-rating {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+    }
+
+    .payment-rating i {
+        color: #ff385c;
+    }
+
+    .payment-count {
+        color: #717171;
+        font-weight: 400;
+    }
+
+    .guest-fav {
+        margin-left: 8px;
+        background: #f7f7f7;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .title-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 8px;
+    }
+
+    .back-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid #ddd;
+        background: #f5ecec;
+        font-size: 26px;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    .back-btn:hover {
+        background: #f7f7f7;
+        transform: scale(1.05);
+    }
+
+    .hidden-box {
+        display: none;
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        margin-top: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .guest-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+
+    .apply-btn {
+        margin-top: 10px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 1px solid black;
+        background: white;
+        cursor: pointer;
+    }
+
+    .change-btn {
+        border: 1px solid #ccc;
+        background: white;
+        padding: 5px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .change-btn:hover {
+        border: 1px solid black;
+    }
+
+    .booking-guest-wrapper {
+        position: relative;
+    }
+
+    .booking-guest-display {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+
+    .booking-guest-dropdown {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 300px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        padding: 15px;
+        z-index: 100;
+    }
+
+    .booking-guest-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .booking-counter button {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        background: white;
+        cursor: pointer;
+    }
+
+    .payment-navbar {
+        padding: 15px 40px;
+        border-bottom: 1px solid #eee;
+        background-color: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .payment-navbar .navbar-nav {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .payment-navbar .navbar-brand {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .payment-navbar .navbar-brand:hover {
+        text-decoration: none;
+    }
+
+    .payment-navbar .airbnb-logo {
+        height: 32px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .payment-navbar .brand-text {
+        font-size: 26px;
+        font-weight: 600;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-left: 8px;
+        color: #ff385c;
+    }
+
+    .payment-footer {
+        margin-top: 2px;
+        padding: 25px 40px;
+        border-top: 1px solid #eee;
+        background: #fafafa;
+        text-align: center;
+    }
+
+    .payment-footer-links {
+        margin-bottom: 8px;
+    }
+
+    .payment-footer-links a {
+        margin: 0 15px;
+        font-size: 18px;
+        color: #555;
+        text-decoration: none;
+    }
+
+    .payment-footer-links a:hover {
+        text-decoration: underline;
+    }
+
+    .payment-footer-brand {
+        font-size: 15px;
+        color: #777;
+    }
+
+    /* MOBILE VIEW */
+@media (max-width:768px){
+
+    .checkout-container{
+        flex-direction:column !important;
+        padding:20px !important;
+        gap:25px;
+    }
+
+    .checkout-left,
+    .checkout-right{
+        width:100% !important;
+    }
+
+    .title{
+        font-size:24px !important;
+        word-break:break-word;
+    }
+
+    .title-row{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        flex-wrap:wrap;   /* heading को wrap करने देगा */
+    }
+
+    .subtitle{
+        font-size:16px !important;
+    }
+
+    .note{
+        font-size:14px !important;
+    }
+
+    .pay-btn{
+        padding:14px !important;
+        font-size:16px !important;
+    }
+
+
+    .back-btn{
+        width: 34px !important;;
+        height:34px !important;
+        font-size:20px !important;
+    }
+
+    .card{
+        width:100% !important;
+        box-sizing:border-box;
+    }
+
+    .booking-guest-dropdown{
+        position:relative;
+        top:10px;
+        right:auto;
+        width:100%;
+    }
+    .payment-footer{
+        padding:15px 10px;   /* पहले 25px 40px था */
+    }
+
+    .payment-footer-links a{
+        margin:0 8px;        /* links का gap कम */
+        font-size:14px;      /* text छोटा */
+    }
+
+    .payment-footer-brand{
+        font-size:13px;      /* copyright text छोटा */
+    }
+
+}
+</style>
+
+<!-- Minimal Navbar -->
+<nav class="payment-navbar">
+    <div class="container">
+        <div class="navbar-nav">
+            <a class="navbar-brand d-flex align-items-center" href="/listings">
+                <img src="/images/airbnb-logo.png" alt="Airbnb Logo" class="airbnb-logo">
+                <span class="brand-text">Airbnb</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<div class="checkout-container">
+
+    <!-- LEFT SECTION -->
+    <div class="checkout-left">
+
+        <div class="title-row">
+            <button class="back-btn" onclick="history.back()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+            <h1 class="title">Confirm and pay</h1>
+        </div>
+
+
+        <p class="subtitle">Proceed to payment</p>
+        <p class="note">You'll be directed to Razorpay to complete payment.</p>
+
+        <button id="pay-btn" class="pay-btn" data-listing="<%= listing._id %>" data-checkin="<%= checkIn %>"
+            data-checkout="<%= checkOut %>" data-guests="<%= totalGuests %>">
+            Continue to Razorpay
+        </button>
+
+
+        <p class="terms">
+            By selecting the button, I agree to the booking terms.
+        </p>
+
+    </div>
+
+
+    <!-- RIGHT SUMMARY CARD -->
+    <div class="checkout-right">
+
+        <div class="card">
+
+            <div class="listing-info">
+                <img src="<%= listing.images?.[0]?.url || '/default.jpg' %>" class="listing-img">
+                <div>
+                    <h3>
+                        <%= listing.title %>
+                    </h3>
+                    <div class="payment-rating">
+                        <span class="payment-star">★</span>
+
+                        <% if (reviewCount> 0) { %>
+                            <span>
+                                <%= avgRating %>
+                            </span>
+                            <span class="payment-count">(<%= reviewCount %> reviews)</span>
+                            <% } else { %>
+                                <span>New</span>
+                                <% } %>
+
+                                    <% if (listing.isGuestFavourite) { %>
+                                        <span class="guest-fav">Guest favourite</span>
+                                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="info-row">
+                <div>
+                    <span class="label">Dates</span>
+                    <span id="displayDates">
+                        <%= checkIn %> — <%= checkOut %>
+                    </span>
+                </div>
+
+                <button type="button" class="change-btn" id="dateChangeBtn">
+                    Change
+                </button>
+            </div>
+            <div id="datePickerBox" class="hidden-box">
+                <input type="date" id="checkInInput" value="<%= checkIn %>">
+                <input type="date" id="checkOutInput" value="<%= checkOut %>">
+
+                <button type="button" class="apply-btn" onclick="applyDates()">
+                    Apply
+                </button>
+            </div>
+
+
+            <div class="info-row">
+                <div>
+                    <span class="label">Guests</span>
+                    <span id="displayGuests">
+                        <%= totalGuests %>
+                            <%= totalGuests> 1 ? "guests" : "guest" %>
+
+                    </span>
+                </div>
+
+                <button type="button" class="change-btn" id="guestChangeBtn">
+                    Change
+                </button>
+            </div>
+            <div id="guestData" style="display:none;" data-adults="<%= adults || 1 %>"
+                data-children="<%= children || 0 %>" data-infants="<%= infants || 0 %>" data-pets="<%= pets || 0 %>">
+            </div>
+
+            <div class="booking-guest-wrapper">
+
+                <div class="booking-guest-dropdown" id="bookingGuestDropdown">
+
+                    <!-- Adults -->
+                    <div class="booking-guest-row">
+                        <div>
+                            <strong>Adults</strong>
+                            <div class="sub">Ages 13+</div>
+                        </div>
+                        <div class="booking-counter">
+                            <button type="button">-</button>
+                            <span class="adultsCount">1</span>
+                            <button type="button">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Children -->
+                    <div class="booking-guest-row">
+                        <div>
+                            <strong>Children</strong>
+                            <div class="sub">Ages 2–12</div>
+                        </div>
+                        <div class="booking-counter">
+                            <button type="button">-</button>
+                            <span class="childrenCount">0</span>
+                            <button type="button">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Infants -->
+                    <div class="booking-guest-row">
+                        <div>
+                            <strong>Infants</strong>
+                            <div class="sub">Under 2</div>
+                        </div>
+                        <div class="booking-counter">
+                            <button type="button">-</button>
+                            <span class="infantsCount">0</span>
+                            <button type="button">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Pets -->
+                    <div class="booking-guest-row">
+                        <div>
+                            <strong>Pets</strong>
+                        </div>
+                        <div class="booking-counter">
+                            <button type="button">-</button>
+                            <span class="petsCount">0</span>
+                            <button type="button">+</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h4 class="section-title">Price details</h4>
+
+            <div class="price-row">
+                <span>₹<%= price %> × <%= nights %> nights</span>
+                <span>₹<%= totalPrice %></span>
+            </div>
+
+            <div class="price-row">
+                <span>Taxes</span>
+                <span>₹<%= tax %></span>
+            </div>
+
+            <hr class="divider">
+
+            <div class="price-total">
+                <span>Total <small class="currency">INR</small></span>
+                <span>₹<%= grandTotal %></span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div id="guestData" style="display:none;" data-adults="<%= adults || 1 %>" data-children="<%= children || 0 %>"
+    data-infants="<%= infants || 0 %>" data-pets="<%= pets || 0 %>">
+</div>
+<!-- Minimal Footer -->
+<footer class="payment-footer">
+    <div class="payment-footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/company-details">Company Details</a>
+    </div>
+
+    <div class="payment-footer-brand">
+        &copy; 2026 Airbnb Privated Limited
+    </div>
+</footer>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const dateBtn = document.getElementById("dateChangeBtn");
+        const dateBox = document.getElementById("datePickerBox");
+
+        const checkInInput = document.getElementById("checkInInput");
+        const checkOutInput = document.getElementById("checkOutInput");
+
+        if (checkInInput && checkOutInput) {
+            const today = new Date().toISOString().split("T")[0];
+            checkInInput.setAttribute("min", today);
+            checkOutInput.setAttribute("min", today);
+
+            checkInInput.addEventListener("change", function () {
+                checkOutInput.setAttribute("min", this.value);
+            });
+        }
+
+        if (dateBtn) {
+            dateBtn.addEventListener("click", function () {
+                dateBox.style.display =
+                    dateBox.style.display === "block" ? "none" : "block";
+            });
+        }
+
+        /* COMMON FUNCTION: Update URL */
+        function updateURL() {
+            const checkIn = checkInInput.value;
+            const checkOut = checkOutInput.value;
+
+            if (checkIn && checkOut) {
+                window.location.href =
+                    `/bookings/<%= listing._id %>/checkout?checkIn=${checkIn}&checkOut=${checkOut}
+        &adults=${guests.adults}
+        &children=${guests.children}
+        &infants=${guests.infants}
+        &pets=${guests.pets}`;
+            }
+        }
+
+        window.applyDates = function () {
+            updateURL();   
+        };
+
+        //Guest Section
+
+        const dropdown = document.getElementById("bookingGuestDropdown");
+        const display = document.getElementById("displayGuests");
+        const wrapper = document.querySelector(".booking-guest-wrapper");
+        const guestBtn = document.getElementById("guestChangeBtn");
+
+        const guestData = document.getElementById("guestData").dataset;
+
+        let guests = {
+            adults: Number(guestData.adults),
+            children: Number(guestData.children),
+            infants: Number(guestData.infants),
+            pets: Number(guestData.pets)
+        };
+
+
+        if (guestBtn) {
+            guestBtn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                dropdown.style.display =
+                    dropdown.style.display === "block" ? "none" : "block";
+            });
+        }
+
+        document.querySelectorAll(".booking-counter button")
+            .forEach(button => {
+                button.addEventListener("click", function () {
+
+                    const type = this.closest(".booking-guest-row")
+                        .querySelector("strong")
+                        .innerText.toLowerCase();
+
+                    const isPlus = this.innerText === "+";
+                    guests[type] += isPlus ? 1 : -1;
+
+                    if (type === "adults" && guests.adults < 1) {
+                        guests.adults = 1;
+                    }
+
+                    if (guests[type] < 0) guests[type] = 0;
+
+                    updateGuestUI();
+                    updateURL();   
+                });
+            });
+
+        function updateGuestUI() {
+
+            document.querySelector(".adultsCount").innerText = guests.adults;
+            document.querySelector(".childrenCount").innerText = guests.children;
+            document.querySelector(".infantsCount").innerText = guests.infants;
+            document.querySelector(".petsCount").innerText = guests.pets;
+
+            let parts = [];
+
+            if (guests.adults > 0)
+                parts.push(guests.adults + " adult" + (guests.adults > 1 ? "s" : ""));
+
+            if (guests.children > 0)
+                parts.push(guests.children + " child" + (guests.children > 1 ? "ren" : ""));
+
+            if (guests.infants > 0)
+                parts.push(guests.infants + " infant" + (guests.infants > 1 ? "s" : ""));
+
+            if (guests.pets > 0)
+                parts.push(guests.pets + " pet" + (guests.pets > 1 ? "s" : ""));
+
+            display.innerText = parts.join(", ");
+        }
+
+        window.addEventListener("click", function (e) {
+            if (wrapper && !wrapper.contains(e.target)) {
+                dropdown.style.display = "none";
+            }
+        });
+
+        updateGuestUI();
+
+    });
+</script>
+
+
+<script>
+document.getElementById("pay-btn").onclick = async function (e) {
+    e.preventDefault();
+
+    const btn = e.target;
+
+    const listingId = btn.dataset.listing;
+    const checkIn = btn.dataset.checkin;
+    const checkOut = btn.dataset.checkout;
+    const guests = btn.dataset.guests;
+
+    try {
+
+        const response = await fetch(`/bookings/${listingId}/create-order`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json" 
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                checkIn,
+                checkOut,
+                guests
+            })
+        });
+
+        const data = await response.json();
+        console.log("Create Order Response:", data);
+        const options = {
+            key: data.key,
+            amount: data.amount,
+            currency: "INR",
+            name: "Stay Booking",
+            description: "Booking Payment",
+            order_id: data.orderId,
+
+            handler: async function (response) {
+
+                const verifyRes = await fetch("/bookings/verify", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        ...response,
+                        bookingId: data.bookingId
+                    })
+                });
+
+                const verifyData = await verifyRes.json();
+
+                if (verifyData.success) {
+                    window.location.href = `/bookings/success/${data.bookingId}`;
+                } else {
+                    alert("Payment verification failed");
+                }
+            },
+
+            theme: {
+                color: "#000000"
+            }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+
+    } catch (err) {
+        console.log(err);
+        alert("Something went wrong");
+    }
+};
+</script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>

@@ -1,0 +1,23 @@
+<h1>Support Inbox</h1>
+
+<% msgs.forEach(m => { %>
+  <div style="border:1px solid #ccc; padding:15px; margin:10px 0;">
+    
+    <b>User message:</b>
+    <p><%= m.message %></p>
+
+    <% if (m.reply) { %>
+      <b>Reply:</b>
+      <p style="color:green;"><%= m.reply %></p>
+    <% } else { %>
+      <form action="/support/reply/<%= m._id %>" method="POST">
+        <textarea name="reply" placeholder="Type reply..." required></textarea>
+        <br>
+        <button>Send Reply</button>
+      </form>
+    <% } %>
+
+    <p>Status: <%= m.status || "pending" %></p>
+
+  </div>
+<% }) %>

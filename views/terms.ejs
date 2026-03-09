@@ -1,0 +1,83 @@
+<% layout("layouts/boilerplate") %>
+
+    <div class="legal-layout">
+
+        <!-- LEFT CONTENT -->
+        <div class="legal-page">
+            <h1>Terms of Service</h1>
+            <p class="legal-updated">Last updated: January 2026</p>
+
+            <section>
+                <h4>Acceptance of Terms</h4>
+                <p>
+                    By accessing or using Wanderlust, you agree to be bound by these
+                    Terms of Service and all applicable laws.
+                </p>
+            </section>
+
+            <section>
+                <h4>User Responsibilities</h4>
+                <p>
+                    You are responsible for maintaining the confidentiality of your
+                    account and all activities that occur under your account.
+                </p>
+            </section>
+
+            <section>
+                <h4>Bookings & Payments</h4>
+                <p>
+                    All bookings made through Wanderlust are subject to availability
+                    and confirmation.
+                </p>
+            </section>
+
+            <section>
+                <h4>Termination</h4>
+                <p>
+                    We reserve the right to suspend or terminate your access if you
+                    violate these terms.
+                </p>
+            </section>
+
+            <div id="feedbackModal" class="feedback-overlay">
+                <div class="feedback-modal">
+                    <button class="feedback-close" onclick="closeFeedbackModal()">×</button>
+
+                    <h3>Tell us about it</h3>
+                    <p class="feedback-sub">
+                        Share your experience with us.
+                    </p>
+
+                    <!-- FORM IS IMPORTANT -->
+                    <form id="feedbackForm">
+                        <textarea id="feedbackText" placeholder="Write your feedback here..." rows="4"
+                            required></textarea>
+
+                        <label class="bug-check">
+                            <input type="checkbox" id="isBug" />
+                            I’m reporting a bug
+                        </label>
+
+                        <button type="submit" class="feedback-submit" disabled>
+                            Submit →
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- RIGHT CONTACT BOX -->
+        <aside class="legal-contact">
+            <h5>Need to get in touch?</h5>
+            <p>
+                We’ll start with a few questions and get you to the right place.
+            </p>
+
+            <a href="/contact" class="contact-btn">Contact us</a>
+
+            <a href="#" class="legal-feedback" onclick="openFeedbackModal(event)">
+                You can also give us feedback
+            </a>
+        </aside>
