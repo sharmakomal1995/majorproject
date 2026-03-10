@@ -28,7 +28,7 @@ The application is built using **Node.js, Express.js, MongoDB, EJS, HTML, CSS, B
 
 ## My Booking Page
 
-![My Booking](screenshots/my booking.png)
+![My Booking](screenshots/mybooking.png)
 
 ## Wishlist Page
 
@@ -36,7 +36,7 @@ The application is built using **Node.js, Express.js, MongoDB, EJS, HTML, CSS, B
 
 ## Support Message Page
 
-![Support Message](screenshots/support message.png)
+![Support Message](screenshot/airbnbsupport.png)
 
 ---
 
