@@ -22,6 +22,22 @@ The application is built using **Node.js, Express.js, MongoDB, EJS, HTML, CSS, B
 
 ![Booking](screenshots/booking.png)
 
+## Profile Page
+
+![Profile Page](screenshots/profile.png)
+
+## My Booking Page
+
+![My Booking](screenshots/my booking.png)
+
+## Wishlist Page
+
+![Wishlist](screenshots/wishlist.png)
+
+## Support Message Page
+
+![Support Message](screenshots/support message.png)
+
 ---
 
 # Tech Stack
