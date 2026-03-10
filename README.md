@@ -99,6 +99,9 @@ The application includes a complete **booking system** that allows users to rese
 * Users can also give **category-based ratings**.
 * Guests can **edit or delete their reviews**.
 
+## Review Page
+
+![Home Page](screenshots/review.png)
 ---
 
 ## Map Integration
@@ -107,6 +110,9 @@ The application includes a complete **booking system** that allows users to rese
 * Implemented using **Mapbox and Leaflet**.
 * Helps users easily view the exact location of a property.
 
+## Map Page
+
+![Home Page](screenshots/map.png)
 ---
 
 ## Messaging System
@@ -116,6 +122,13 @@ The application includes a complete **booking system** that allows users to rese
 * Messages are stored in **MongoDB** and handled using **JavaScript and Express routes**.
 * The messaging system works in **real-time style interaction**.
 
+## Airbnb Support Page
+
+![Home Page](screenshots/support.png)
+
+## Admin Inbox Page
+
+![Home Page](screenshots/message.png)
 ---
 
 ## Host Controls
@@ -137,6 +150,9 @@ Users can:
 * View connections
 * Access their profile details in the **About section**
 
+## Profile Page
+
+![Home Page](screenshots/profile.png)
 ---
 
 ## Privacy & Terms
