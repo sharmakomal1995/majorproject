@@ -101,6 +101,10 @@ app.use((req,res,next)=>{
     next();
 });
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 app.use("/profile", profileRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/messages", messageRoutes);
@@ -170,6 +174,7 @@ app.get("/terms", (req, res) => {
 app.get("/contact", (req, res) => {
   res.render("contact");
 });
+
 
 
 app.use((req, res, next) => {
