@@ -8,35 +8,9 @@ The application is built using **Node.js, Express.js, MongoDB, EJS, HTML, CSS, B
 
 ---
 
-# Project Preview
-
 ## Home Page
 
 ![Home Page](screenshots/Home.png)
-
-## Listing Details Page
-
-![Listing Page](screenshots/listing.png)
-
-## Booking System
-
-![Booking](screenshots/booking.png)
-
-## Profile Page
-
-![Profile Page](screenshots/profile.png)
-
-## My Booking Page
-
-![My Booking](screenshots/mybooking.png)
-
-## Wishlist Page
-
-![Wishlist](screenshots/wishlist.png)
-
-## Support Message Page
-
-![Support Message](screenshot/airbnbsupport.png)
 
 ---
 
@@ -80,6 +54,9 @@ The application is built using **Node.js, Express.js, MongoDB, EJS, HTML, CSS, B
 * Each listing contains images, description, price, and location.
 * Listings can be **shared with others**.
 
+## Listing Details Page
+
+![Listing Page](screenshots/listing.png)
 ---
 
 ## Booking System
@@ -98,13 +75,22 @@ The application includes a complete **booking system** that allows users to rese
 * Users can **download their booking details** after completing a reservation.
 * Bookings can also be **cancelled by the user** if needed.
 
+## Booking System
+
+![Booking](screenshots/booking.png)
+
+## My Booking Page
+
+![My Booking](screenshots/mybooking.png)
 ---
 
 ## Wishlist Feature
 
 * Users can save listings to their wishlist.
 * Wishlist items are stored in **MongoDB database**.
-
+  
+## Wishlist Page  
+![Wishlist](screenshots/wishlist.png)
 ---
 
 ## Reviews and Ratings
