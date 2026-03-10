@@ -49,7 +49,14 @@ The application is built using **Node.js, Express.js, MongoDB, EJS, HTML, CSS, B
 
 ---
 
-# Features
+## Key Features
+# User Authentication
+
+* Users can sign up and log in securely.
+
+* Each user can manage their personal account.
+
+## Features
 
 ## Property Listings
 
