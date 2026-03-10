@@ -127,7 +127,6 @@
       color: #ff385c;
     }
 
-    /* remove focus outline */
     a:focus,
     a:active {
       outline: none;
@@ -154,9 +153,6 @@
       }
     }
 
-    /* =========================
-   MOBILE HORIZONTAL FIX
-========================= */
     @media (max-width: 768px) {
 
       section h3 {
@@ -183,21 +179,18 @@
 
       .listing-card {
         min-width: 42%;
-        /* 2 cards per screen */
         max-width: 42%;
         scroll-snap-align: start;
       }
 
       .carousel-btn {
         display: none;
-        /* arrows hide */
       }
 
       .card-body {
         font-size: 12px;
       }
 
-      /* Title one line */
       .card-body b {
         font-size: 12px;
         font-weight: 500;
@@ -207,17 +200,14 @@
         text-overflow: ellipsis;
       }
 
-      /* Hide GST text */
       .tax-text {
         display: none;
       }
 
-      /* Price + rating same line */
       .card-body .d-flex {
         font-size: 12px;
         font-weight: 400;
         color: #666;
-        /* light color */
         flex-wrap: nowrap;
         white-space: nowrap;
         margin-top: 2px;
@@ -229,7 +219,7 @@
 
       .card-body br {
         display: none;
-        /* extra gap remove */
+        
       }
 
       .listing-price {
@@ -249,13 +239,9 @@
 
       .heart-icon {
         top: 2px;
-        /* same as badge */
+        
       }
     }
-
-    /* =========================
-   MOBILE BOTTOM NAV
-========================= */
 
     @media (max-width: 768px) {
 
@@ -305,7 +291,6 @@
         object-fit: cover;
       }
 
-      /* body bottom space so content not hidden */
       body {
         padding-bottom: 70px;
       }

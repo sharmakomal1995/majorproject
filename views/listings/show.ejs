@@ -288,7 +288,7 @@ if (currUser && currUser.wishlist) {
                 <div class="show-listing-right">
 
                     <div class="booking-card">
-                        <h3 id="bookingHeading">Add dates for prices</h3>
+                        <h3 id="bookingHeading" data-price="<%= listing.price %>">Add dates for prices</h3>
 
                         <form action="/bookings/<%= listing._id %>/checkout" method="GET">
 

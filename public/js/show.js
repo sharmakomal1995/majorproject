@@ -133,7 +133,8 @@ document.querySelectorAll(".review-stars").forEach(group => {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const pricePerNight = parseInt("<%= listing.price %>") || 0;
+    const heading = document.getElementById("bookingHeading");
+    const pricePerNight = parseInt(heading.dataset.price) || 0;
 
     let guests = {
         adults: 1,
@@ -234,15 +235,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================
-       PRICE LOGIC
-    ===================== */
+        PRICE LOGIC
+        ===================== */
     const checkInInput = document.querySelector("input[name='checkIn']");
     const checkOutInput = document.querySelector("input[name='checkOut']");
-    const heading = document.getElementById("bookingHeading");
     const button = document.getElementById("availabilityBtn");
+    
     /* =====================
-DISABLE PAST DATES
-===================== */
+        DISABLE PAST DATES
+       ===================== */
 
     // Aaj ki date
     const today = new Date().toISOString().split("T")[0];
@@ -261,7 +262,7 @@ DISABLE PAST DATES
             checkOutInput.value = "";
         }
 
-        calculateNights(); // price auto update
+        calculateNights(); 
     });
 
 
