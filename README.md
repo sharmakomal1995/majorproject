@@ -12,7 +12,7 @@ The application is built using **Node.js, Express.js, MongoDB, EJS, HTML, CSS, B
 
 ## Home Page
 
-![Home Page](screenshots/home.png)
+![Home Page](screenshots/Home.png)
 
 ## Listing Details Page
 
