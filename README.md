@@ -40,7 +40,7 @@ The application is built using **Node.js, Express.js, MongoDB, EJS, HTML, CSS, B
 ---
 
 ## Key Features
-# User Authentication
+### User Authentication
 
 * Users can sign up and log in securely.
 
@@ -101,7 +101,7 @@ The application includes a complete **booking system** that allows users to rese
 
 ## Review Page
 
-![Home Page](screenshots/review.png)
+![Home Page](screenshots/rating.png)
 ---
 
 ## Map Integration
