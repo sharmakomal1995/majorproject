@@ -143,7 +143,7 @@ app.post("/feedback", async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: `"Wanderlust Feedback" <${process.env.EMAIL_USER}>`,
+      from: `"Airbnb Feedback" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       subject: "New Feedback Received",
       html: `

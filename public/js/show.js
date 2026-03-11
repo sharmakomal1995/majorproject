@@ -1,4 +1,3 @@
-
 function openGallery() {
     document.getElementById("photoModal").style.display = "block";
     document.body.classList.add("modal-open");
@@ -8,8 +7,6 @@ function closeGallery() {
     document.getElementById("photoModal").style.display = "none";
     document.body.classList.remove("modal-open");
 }
-
-
 
 const btn = document.getElementById("toggleBtn");
 const box = document.getElementById("moreDetails");
@@ -36,8 +33,6 @@ function closeAboutPopup() {
     document.body.style.overflow = "auto";
 }
 
-
-
 function toggleAmenities() {
     const section = document.getElementById("amenitiesSection");
     if (section.style.display === "none") {
@@ -47,14 +42,10 @@ function toggleAmenities() {
     }
 }
 
-
-
 function copyLink() {
     navigator.clipboard.writeText(window.location.href);
     alert("Link copied!");
 }
-
-
 
 const saveBtn = document.getElementById("saveBtn");
 
@@ -78,14 +69,10 @@ if (saveBtn) {
     });
 }
 
-
-
 document.querySelectorAll('.bar-fill').forEach(bar => {
     const width = bar.dataset.width;
     bar.style.width = width + '%';
 });
-
-
 
 function openCommentPopup(id) {
     document.getElementById("popup-" + id).style.display = "flex";
@@ -94,8 +81,6 @@ function openCommentPopup(id) {
 function closeCommentPopup(id) {
     document.getElementById("popup-" + id).style.display = "none";
 }
-
-
 
 document.querySelectorAll(".review-stars").forEach(group => {
 
@@ -129,8 +114,6 @@ document.querySelectorAll(".review-stars").forEach(group => {
 
 });
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
 
     const heading = document.getElementById("bookingHeading");
@@ -152,9 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const hiddenPets = document.getElementById("hiddenPets");
 
 
-    /* =====================
-       TOGGLE DROPDOWN
-    ===================== */
+   //toggle dropdown
     document.querySelector(".booking-guest-display")
         .addEventListener("click", function (e) {
             e.stopPropagation();
@@ -162,9 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 dropdown.style.display === "block" ? "none" : "block";
         });
 
-    /* =====================
-       CHANGE GUEST
-    ===================== */
+        //change guest
     document.querySelectorAll(".booking-counter button")
         .forEach(button => {
             button.addEventListener("click", function () {
@@ -226,24 +205,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         summaryEl.innerText = summaryParts.join(", ");
 
-        // hidden inputs update
         hiddenAdults.value = guests.adults;
         hiddenChildren.value = guests.children;
         hiddenInfants.value = guests.infants;
         hiddenPets.value = guests.pets;
     }
 
-
-    /* =====================
-        PRICE LOGIC
-        ===================== */
+    //price logic
     const checkInInput = document.querySelector("input[name='checkIn']");
     const checkOutInput = document.querySelector("input[name='checkOut']");
     const button = document.getElementById("availabilityBtn");
-    
-    /* =====================
-        DISABLE PAST DATES
-       ===================== */
 
     // Aaj ki date
     const today = new Date().toISOString().split("T")[0];
@@ -252,19 +223,16 @@ document.addEventListener("DOMContentLoaded", function () {
     checkInInput.setAttribute("min", today);
     checkOutInput.setAttribute("min", today);
 
-    // Checkout always after checkin
     checkInInput.addEventListener("change", function () {
 
         checkOutInput.setAttribute("min", this.value);
 
-        // Agar checkout already smaller hai to reset karo
         if (checkOutInput.value < this.value) {
             checkOutInput.value = "";
         }
 
         calculateNights(); 
     });
-
 
     function calculateNights() {
 
@@ -298,9 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     checkOutInput.addEventListener("change", calculateNights);
 
-    /* =====================
-       CLOSE DROPDOWN
-    ===================== */
+    //close dropdown
     window.addEventListener("click", function (e) {
         if (!wrapper.contains(e.target)) {
             dropdown.style.display = "none";
@@ -309,8 +275,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     updateGuestUI();
 });
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -333,9 +297,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-
-
-
 
 function toggleAmenities() {
 
@@ -374,9 +335,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
 

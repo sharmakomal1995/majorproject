@@ -308,10 +308,8 @@
 
         .section-inner {
             max-width: 1140px;
-            /* same as bootstrap container */
             margin: 0 auto;
             padding: 15px 12px;
-            /* same as container padding */
             display: flex;
             gap: 30px;
         }
@@ -331,9 +329,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Already existing allowed grid ko touch nahi kar rahe */
-
-        /* NOT ALLOWED SECTION KO GRID BANAYENGE */
         .not-allowed-section {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -341,7 +336,6 @@
             margin-top: 20px;
         }
 
-        /* Same alignment as allowed */
         .not-allowed-section .amenity-item {
             display: flex;
             align-items: center;
@@ -349,13 +343,11 @@
             font-size: 16px;
         }
 
-        /* Icon size same */
         .not-allowed-section .amenity-item i {
             font-size: 20px;
             width: 25px;
         }
 
-        /* Cross line style */
         .not-allowed-section .not-allowed span {
             text-decoration: line-through;
             opacity: 0.7;
@@ -477,7 +469,6 @@
             color: black;
             border-radius: 8px;
             text-decoration: none;
-            /* underline remove */
             font-weight: 600;
             transition: 0.2s ease;
         }
@@ -504,17 +495,14 @@
 
         .photo-header {
             background: transparent;
-            /* background hat jayega */
         }
 
         .photo-header h3 {
             color: #fff;
-            /* Photo tour white */
         }
 
         .back-gallery {
             color: #fff;
-            /* back icon white */
         }
 
         .listing-owner-actions {
@@ -522,8 +510,6 @@
             gap: 12px;
             margin-top: 15px;
         }
-
-        /* same size buttons */
 
         .listing-edit-btn,
         .listing-delete-btn {
@@ -557,39 +543,30 @@
         @media (min-width: 1024px) {
             h1 i.fa-star {
                 font-size: 46px;
-                /* ya jitna chhota aapko chahiye */
                 vertical-align: middle;
-                /* text ke sath alignment ke liye */
                 color: #f5c518;
-                /* optional: star ka color */
             }
         }
 
-        /* ================= MOBILE RESPONSIVE ================= */
 
         @media (max-width:768px) {
 
-            /* container full width */
             .show-container {
                 width: 100%;
                 padding-left: 16px;
                 padding-right: 16px;
             }
 
-            /* title spacing */
             .show-listing-title {
                 font-size: 22px;
                 padding-left: 0;
             }
 
-            /* location header */
             .show-listing-header {
                 padding-left: 0;
             }
 
             /* ===== GALLERY ===== */
-
-            /* mobile par sirf 1 image */
             .airbnb-gallery {
                 grid-template-columns: 1fr;
                 width: 100%;
@@ -602,7 +579,7 @@
                 border-radius: 14px;
             }
 
-            /* side images hide */
+            /* side images */
             .gallery-side {
                 display: none;
             }
@@ -713,8 +690,7 @@
                 font-size: 16px;
             }
 
-            /* RATING MOBILE FIX */
-
+            /* RATING */
             .airbnb-rating-section {
                 padding-bottom: 0;
                 margin-bottom: 0;
@@ -731,7 +707,6 @@
                 display: none;
             }
 
-            /* niche ka rating bars aur categories hide */
             .rating-bottom {
                 display: none;
             }
@@ -771,20 +746,15 @@
                 margin-top: 2px;
                 margin-bottom: 40px;
                 padding: 8px 14px;
-                /* button ke andar spacing */
                 background: #f2f2f2;
-                /* light gray background */
                 color: #000;
-                /* text black */
                 border: 1px solid #ccc;
                 border-radius: 8px;
-                /* charo taraf curve */
                 font-weight: 600;
                 text-decoration: none;
                 cursor: pointer;
             }
 
-            /* font size chhota */
             .review-comment {
                 font-size: 14px;
                 line-height: 1.4;
@@ -812,7 +782,7 @@
                 margin-top: 6px;
             }
 
-            /* show all photos button bottom-right */
+            /* show all photos button */
             .show-page .show-all {
                 position: absolute;
                 bottom: 12px;
@@ -954,7 +924,6 @@
                 gap: 10px;
             }
 
-            /* stars wrap ho sake */
             .starRating {
                 display: flex;
                 flex-wrap: wrap;
@@ -1045,13 +1014,11 @@
             .f-info-links {
                 display: flex;
                 justify-content: space-between;
-                /* left → center → right */
                 width: 100%;
                 padding: 0 12px;
                 flex-wrap: nowrap;
             }
 
-            /* text chhota taaki fit ho jaye */
             .f-info-links a {
                 font-size: 13px;
                 white-space: nowrap;

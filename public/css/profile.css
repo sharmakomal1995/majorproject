@@ -1,4 +1,3 @@
-/* ===== Base ===== */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Helvetica, Arial, sans-serif;
@@ -544,19 +543,14 @@ body.profile-view .airbnb-search {
   position: fixed;
   right: 32px;
   bottom: 90px;
-
   background-color: #ff385c;
   color: #fff;
-
   border: none;
   border-radius: 12px;
-
   padding: 14px 28px;
   font-size: 16px;
   font-weight: 600;
-
   cursor: pointer;
-
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   z-index: 999;
@@ -568,22 +562,19 @@ body.profile-view .airbnb-search {
 .show-all-btn{
    border: none;
   border-radius: 8px;
-
   padding: 10px 18px;
   font-size: 16px;
   font-weight: 600;
-
   cursor: pointer;
   background-color: #e6dedf;
   color: #110101;
 }
+
+
 @media (min-width: 768px){
     .mobile-bottom-nav{
         display: none !important;
     }
-}
-
-@media (max-width:768px){
 
   /* Layout column */
   .profile-page{
@@ -644,9 +635,6 @@ body.profile-view .airbnb-search {
     font-size:14px;
   }
 
-  /* Complete profile card */
-  
-
   /* Edit profile page */
   .airbnb-edit-page{
     padding:10px;
@@ -660,7 +648,6 @@ body.profile-view .airbnb-search {
     padding:14px;
   }
 
-  /* Remove any divider lines */
   hr{
     display:none;
   }

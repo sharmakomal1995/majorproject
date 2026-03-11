@@ -6,15 +6,15 @@ module.exports.renderSignupForm = (req, res) => {
 
 module.exports.signup = async (req, res, next) => {
     try {
-        const { username, email, password } = req.body;
-        const newUser = new User({ email, username });
+        const { username, email,phone, password } = req.body;
+        const newUser = new User({ email,phone, username });
         const registeredUser = await User.register(newUser, password);
 
         req.login(registeredUser, (err) => {
             if (err) {
                 return next(err);
             }
-            req.flash("success", "Welcome to Wanderlust!");
+            req.flash("success", "Welcome to Airbnb!");
             return res.redirect("/listings");
         });
     } catch (e) {
@@ -28,7 +28,7 @@ module.exports.renderLoginForm = (req, res) => {
 };
 
 module.exports.login = (req, res) => {
-    req.flash("success", "Welcome back to Wanderlust!");
+    req.flash("success", "Welcome back to Airbnb!");
     const redirectUrl = res.locals.redirectUrl || "/listings";
     return res.redirect(redirectUrl);
 };

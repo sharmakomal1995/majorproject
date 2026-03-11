@@ -798,9 +798,6 @@ footer{
 }
 
 @media (max-width:768px){
-
-/* dropdown center */
-/* .where-dropdown, */
 .calender-dropdown,
 .guest-dropdown{
     position: fixed;

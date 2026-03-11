@@ -59,59 +59,59 @@
               <div class="about-details">
                 <div class="about-main">
                   <% if (currUser.profile?.birth) { %>
-                    <p>🎂 Born in <%= currUser.profile.birth %>
+                    <p><i class="fa-solid fa-cake-candles"></i> Born in <%= currUser.profile.birth %>
                     </p>
                     <% } %>
 
                       <% if (currUser.profile?.work) { %>
-                        <p>💼 My work: <%= currUser.profile.work %>
+                        <p><i class="fa-solid fa-briefcase"></i> My work: <%= currUser.profile.work %>
                         </p>
                         <% } %>
 
                           <% if (currUser.profile?.travel) { %>
-                            <p>✈️ Where I’ve always wanted to go: <%= currUser.profile.travel %>
+                            <p><i class="fa-solid fa-plane"></i> Where I've always wanted to go: <%= currUser.profile.travel %>
                             </p>
                             <% } %>
 
                               <% if (currUser.profile?.pet) { %>
-                                <p>🐶 Pets: <%= currUser.profile.pet %>
+                                <p><i class="fa-solid fa-dog"></i> Pets: <%= currUser.profile.pet %>
                                 </p>
                                 <% } %>
 
                                   <% if (currUser.profile?.school) { %>
-                                    <p>🎓 School: <%= currUser.profile.school %>
+                                    <p><i class="fa-solid fa-graduation-cap"></i> School: <%= currUser.profile.school %>
                                     </p>
                                     <% } %>
 
                 </div>
                 <div class="about-extra" id="extraDetails" style="display:none;">
                   <% if (currUser.profile?.fun) { %>
-                    <p>✨ Fun fact: <%= currUser.profile.fun %>
+                    <p><i class="fa-solid fa-party-horn"></i> Fun fact: <%= currUser.profile.fun %>
                     </p>
                     <% } %>
 
                       <% if (currUser.profile?.time) { %>
-                        <p>⏳ I spend too much time: <%= currUser.profile.time %>
+                        <p><i class="fa-solid fa-hourglass-half"></i> I spend too much time: <%= currUser.profile.time %>
                         </p>
                         <% } %>
 
                           <% if (currUser.profile?.skill) { %>
-                            <p>🧠 Most useless skill: <%= currUser.profile.skill %>
+                            <p><i class="fa-solid fa-bullseye"></i> Most useless skill: <%= currUser.profile.skill %>
                             </p>
                             <% } %>
 
                               <% if (currUser.profile?.song) { %>
-                                <p>🎵 Favourite song: <%= currUser.profile.song %>
+                                <p><i class="fa-solid fa-music"></i> Favourite song: <%= currUser.profile.song %>
                                 </p>
                                 <% } %>
 
                                   <% if (currUser.profile?.observe) { %>
-                                    <p>❤️ Obsessed with: <%= currUser.profile.observe %>
+                                    <p> <i class="fa-solid fa-heart"></i> Obsessed with: <%= currUser.profile.observe %>
                                     </p>
                                     <% } %>
 
                                       <% if (currUser.profile?.biography) { %>
-                                        <p>📖 Biography title: <%= currUser.profile.biography %>
+                                        <p><i class="fa-solid fa-book"></i> Biography title: <%= currUser.profile.biography %>
                                         </p>
                                         <% } %>
                 </div>
@@ -123,7 +123,7 @@
 
               <% } else { %>
 
-                <!-- AIRBNB STYLE EDIT PROFILE -->
+                <!-- EDIT PROFILE -->
 
                 <div class="airbnb-edit-page">
 
@@ -154,7 +154,7 @@
                     </div>
                   </div>
 
-                  <!-- Airbnb style options grid -->
+                  <!-- options grid -->
                   <div class="profile-options-wrapper">
                     <div class="airbnb-options">
 
@@ -165,7 +165,7 @@
        'Show the decade I was born'
      )">
                       <div class="left">
-                      <span class="icon">🎂</span>
+                      <span class="icon"><i class="fa-solid fa-cake-candles"></i></span>
                       <div class="text">
                       <strong>Decade I was born</strong>
                       <p>
@@ -183,7 +183,7 @@
        'My Work:'
      )">
                     <div class="left">
-                      <span class="icon">💼</span>
+                      <span class="icon"><i class="fa-solid fa-briefcase"></i></span>
                       <div class="text">
                       <strong>My work</strong>
                       <p>
@@ -201,7 +201,7 @@
        'Where I’ve always wanted to go'
      )">
                       <div class="left">
-                      <span class="icon">✈️</span>
+                      <span class="icon"><i class="fa-solid fa-plane"></i></span>
                       <div class="text">
                       <strong>Where I’ve always wanted to go</strong>
                       <p>
@@ -219,7 +219,7 @@
        'Pets'
      )">
                      <div class="left">
-                     <span class="icon">🐶</span>
+                     <span class="icon"><i class="fa-solid fa-dog"></i></span>
                      <div class="text">
                       <strong>Pets</strong>
                       <p>
@@ -237,7 +237,7 @@
        'Where I went to school'
      )">
                       <div class="left">
-                      <span class="icon">🎓</span>
+                      <span class="icon"><i class="fa-solid fa-graduation-cap"></i></span>
                       <div class="text">
                       <strong>Where I went to school</strong>
                       <p>
@@ -255,7 +255,7 @@
        'My fun fact:'
      )">
                       <div class="left">
-                      <span class="icon">✨</span>
+                      <span class="icon"><i class="fa-solid fa-party-horn"></i></span>
                       <div class="text">
                       <strong>My fun fact</strong>
                       <p>
@@ -273,7 +273,7 @@
        'I spend too much time:'
      )">
                       <div class="left">
-                      <span class="icon">⏳</span>
+                      <span class="icon"><i class="fa-solid fa-hourglass-half"></i></span>
                       <div class="text">
                       <strong>I spend too much time</strong>
                       <p>
@@ -291,7 +291,7 @@
        'My most useless skill:'
      )">
                       <div class="left">
-                      <span class="icon">🧠</span>
+                      <span class="icon"><i class="fa-solid fa-bullseye"></i></span>
                       <div class="text">
                       <strong>My most useless skill</strong>
                       <p>
@@ -309,7 +309,7 @@
        'My favourite song in secoundary school:'
      )">
                       <div class="left">
-                      <span class="icon">🎵</span>
+                      <span class="icon"><i class="fa-solid fa-music"></i></span>
                       <div class="text">
                       <strong>My favourite song in secoundary school</strong>
                       <p>
@@ -327,7 +327,7 @@
        'I am obsered with:'
      )">
                       <div class="left">
-                      <span class="icon">❤️</span>
+                      <span class="icon"><i class="fa-solid fa-heart"></i></span>
                       <div class="text">
                       <strong>I am obsered with:</strong>
                       <p>
@@ -345,7 +345,7 @@
        'My biography title would be:'
      )">
                       <div class="left">
-                      <span class="icon">📖</span>
+                      <span class="icon"><i class="fa-solid fa-book"></i></span>
                       <div class="text">
                       <strong>My biography title would be:</strong>
                       <p>
