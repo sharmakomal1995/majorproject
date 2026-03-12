@@ -2,6 +2,17 @@
 
   <% bodyClass="profile-view" %>
 
+  <nav class="profile-navbar">
+    <div class="container">
+        <div class="navbar-nav">
+            <a class="navbar-brand d-flex align-items-center" href="/listings">
+                <img src="/images/airbnb-logo.png" alt="Airbnb Logo" class="airbnb-logo">
+                <span class="brand-text">Airbnb</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
     <div class="profile-page">
 
       <!-- Left sidebar -->
@@ -69,7 +80,8 @@
                         <% } %>
 
                           <% if (currUser.profile?.travel) { %>
-                            <p><i class="fa-solid fa-plane"></i> Where I've always wanted to go: <%= currUser.profile.travel %>
+                            <p><i class="fa-solid fa-plane"></i> Where I've always wanted to go: <%=
+                                currUser.profile.travel %>
                             </p>
                             <% } %>
 
@@ -91,7 +103,8 @@
                     <% } %>
 
                       <% if (currUser.profile?.time) { %>
-                        <p><i class="fa-solid fa-hourglass-half"></i> I spend too much time: <%= currUser.profile.time %>
+                        <p><i class="fa-solid fa-hourglass-half"></i> I spend too much time: <%= currUser.profile.time
+                            %>
                         </p>
                         <% } %>
 
@@ -111,7 +124,8 @@
                                     <% } %>
 
                                       <% if (currUser.profile?.biography) { %>
-                                        <p><i class="fa-solid fa-book"></i> Biography title: <%= currUser.profile.biography %>
+                                        <p><i class="fa-solid fa-book"></i> Biography title: <%=
+                                            currUser.profile.biography %>
                                         </p>
                                         <% } %>
                 </div>
@@ -120,6 +134,11 @@
                 </button>
               </div>
 
+              <!-- Logout (mobile only) -->
+              <a href="/logout" class="profile-menu logout-mobile">
+                <i class="fa-solid fa-right-from-bracket menu-icon"></i>
+                <span>Log out</span>
+              </a>
 
               <% } else { %>
 
@@ -158,203 +177,203 @@
                   <div class="profile-options-wrapper">
                     <div class="airbnb-options">
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                       'birth',
        'Decade you were born',
        'Dont worry other people would not be able to see your exact birthday',
        'Show the decade I was born'
      )">
-                      <div class="left">
-                      <span class="icon"><i class="fa-solid fa-cake-candles"></i></span>
-                      <div class="text">
-                      <strong>Decade I was born</strong>
-                      <p>
-                        <%= currUser.profile?.birth || "Not added" %>
-                      </p>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-cake-candles"></i></span>
+                          <div class="text">
+                            <strong>Decade I was born</strong>
+                            <p>
+                              <%= currUser.profile?.birth || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      </div>
-                      <span class="chevron">›</span>
-                    </div>
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                         'work',
        'What do you do for work??',
        'Tell us what your profession is. If you don’t have a traditional job, tell us your life’s calling. Example: Nurse, parent to four kids, or retired surfer. Where is this shown?',
        'My Work:'
      )">
-                    <div class="left">
-                      <span class="icon"><i class="fa-solid fa-briefcase"></i></span>
-                      <div class="text">
-                      <strong>My work</strong>
-                      <p>
-                        <%= currUser.profile?.work || "Not added" %>
-                      </p>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-briefcase"></i></span>
+                          <div class="text">
+                            <strong>My work</strong>
+                            <p>
+                              <%= currUser.profile?.work || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      </div>
-                      <span class="chevron">›</span>
-                    </div>
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                         'travel',
        'Where have you always wanted to travel?',
        'Whether it’s on your bucket list or your shortlist, tell us a place you can’t wait to visit.',
        'Where I’ve always wanted to go'
      )">
-                      <div class="left">
-                      <span class="icon"><i class="fa-solid fa-plane"></i></span>
-                      <div class="text">
-                      <strong>Where I’ve always wanted to go</strong>
-                      <p>
-                        <%= currUser.profile?.travel || "Not added" %>
-                      </p>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-plane"></i></span>
+                          <div class="text">
+                            <strong>Where I’ve always wanted to go</strong>
+                            <p>
+                              <%= currUser.profile?.travel || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      </div>
-                      <span class="chevron">›</span>
-                    </div>
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                         'pet',
        'Do you have any pets in your life?',
        'Share any pets you have and their names. Example: My calico cat Whiskers or my speedy tortoise Leonardo.',
        'Pets'
      )">
-                     <div class="left">
-                     <span class="icon"><i class="fa-solid fa-dog"></i></span>
-                     <div class="text">
-                      <strong>Pets</strong>
-                      <p>
-                        <%= currUser.profile?.pet || "Not added" %>
-                      </p>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-dog"></i></span>
+                          <div class="text">
+                            <strong>Pets</strong>
+                            <p>
+                              <%= currUser.profile?.pet || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      </div>
-                      <span class="chevron">›</span>
-                    </div>
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                         'school',
        'Where did you go to school?',
        'Whether it’s home school, secondary school or trade school, name the school that made you who you are.',
        'Where I went to school'
      )">
-                      <div class="left">
-                      <span class="icon"><i class="fa-solid fa-graduation-cap"></i></span>
-                      <div class="text">
-                      <strong>Where I went to school</strong>
-                      <p>
-                        <%= currUser.profile?.school || "Not added" %>
-                      </p>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                          <div class="text">
+                            <strong>Where I went to school</strong>
+                            <p>
+                              <%= currUser.profile?.school || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      </div>
-                      <span class="chevron">›</span>
-                    </div>
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                         'fun',
        'What’s a fun fact about you?',
        'Share something unique or unexpected about you. Example: I was in a music video or I’m a juggler.',
        'My fun fact:'
      )">
-                      <div class="left">
-                      <span class="icon"><i class="fa-solid fa-party-horn"></i></span>
-                      <div class="text">
-                      <strong>My fun fact</strong>
-                      <p>
-                        <%= currUser.profile?.fun || "Not added" %>
-                      </p>
-                    </div>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-party-horn"></i></span>
+                          <div class="text">
+                            <strong>My fun fact</strong>
+                            <p>
+                              <%= currUser.profile?.fun || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      <span class="chevron">›</span>
-                    </div>
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                       'time',
        'What do you spend too much time doing?',
        'Share an activity or hobby you spend lots of free time on. Example: Watching cat videos or playing chess.',
        'I spend too much time:'
      )">
-                      <div class="left">
-                      <span class="icon"><i class="fa-solid fa-hourglass-half"></i></span>
-                      <div class="text">
-                      <strong>I spend too much time</strong>
-                      <p>
-                        <%= currUser.profile?.time || "Not added" %>
-                      </p>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-hourglass-half"></i></span>
+                          <div class="text">
+                            <strong>I spend too much time</strong>
+                            <p>
+                              <%= currUser.profile?.time || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      </div>
-                      <span class="chevron">›</span>
-                    </div>
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                       'skill',
        'What’s your most useless skill?',
        'Share a surprising but pointless talent you have. Example: Shuffling cards with one hand.',
        'My most useless skill:'
      )">
-                      <div class="left">
-                      <span class="icon"><i class="fa-solid fa-bullseye"></i></span>
-                      <div class="text">
-                      <strong>My most useless skill</strong>
-                      <p>
-                        <%= currUser.profile?.skill || "Not added" %>
-                      </p>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-bullseye"></i></span>
+                          <div class="text">
+                            <strong>My most useless skill</strong>
+                            <p>
+                              <%= currUser.profile?.skill || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      </div>
-                      <span class="chevron">›</span>
-                    </div>
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                       'song',
        'What was your favourite song in secondary school?',
        'However embarrassing, share the tune you listened to on repeat as a teenager.',
        'My favourite song in secoundary school:'
      )">
-                      <div class="left">
-                      <span class="icon"><i class="fa-solid fa-music"></i></span>
-                      <div class="text">
-                      <strong>My favourite song in secoundary school</strong>
-                      <p>
-                        <%= currUser.profile?.song || "Not added" %>
-                      </p>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-music"></i></span>
+                          <div class="text">
+                            <strong>My favourite song in secoundary school</strong>
+                            <p>
+                              <%= currUser.profile?.song || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      </div>
-                      <span class="chevron">›</span>
-                    </div>
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                       'observe',
        'What are you obsessed with?',
        'Share whatever you can’t get enough of – in a good way. Example: Baking rosemary focaccia.',
        'I am obsered with:'
      )">
-                      <div class="left">
-                      <span class="icon"><i class="fa-solid fa-heart"></i></span>
-                      <div class="text">
-                      <strong>I am obsered with:</strong>
-                      <p>
-                        <%= currUser.profile?.observe || "Not added" %>
-                      </p>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-heart"></i></span>
+                          <div class="text">
+                            <strong>I am obsered with:</strong>
+                            <p>
+                              <%= currUser.profile?.observe || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      </div>
-                      <span class="chevron">›</span>
-                    </div>
 
-                    <div class="option" onclick="openModal(
+                      <div class="option" onclick="openModal(
                       'biography',
        'What would your biography title be?',
        'If someone wrote a book about your life, what would they call it? Example: Born to Roam or Chronicles of a Dog Mum.',
        'My biography title would be:'
      )">
-                      <div class="left">
-                      <span class="icon"><i class="fa-solid fa-book"></i></span>
-                      <div class="text">
-                      <strong>My biography title would be:</strong>
-                      <p>
-                        <%= currUser.profile?.biography || "Not added" %>
-                      </p>
+                        <div class="left">
+                          <span class="icon"><i class="fa-solid fa-book"></i></span>
+                          <div class="text">
+                            <strong>My biography title would be:</strong>
+                            <p>
+                              <%= currUser.profile?.biography || "Not added" %>
+                            </p>
+                          </div>
+                        </div>
+                        <span class="chevron">›</span>
                       </div>
-                      </div>
-                      <span class="chevron">›</span>
-                    </div>
                     </div>
                   </div>
                   <button id="doneBtn" class="done-btn">Done</button>
@@ -377,7 +396,7 @@
                     </div>
                     <% } %>
           </div>
-          
+
     </div>
 
     <!-- COMMON MODAL -->
@@ -503,8 +522,8 @@
     </script>
 
     <script>
-  function toggleDetails() {
-    const el = document.getElementById("extraDetails");
-    el.style.display = el.style.display === "none" ? "block" : "none";
-  }
-</script>
+      function toggleDetails() {
+        const el = document.getElementById("extraDetails");
+        el.style.display = el.style.display === "none" ? "block" : "none";
+      }
+    </script>

@@ -22,63 +22,73 @@
 </head>
 
 <body class="<%= typeof bodyClass !== 'undefined' ? bodyClass : '' %>">
-    <%- include("../includes/navbar.ejs") %>
-        <div class="container"><%- include("../includes/flash.ejs") %><%- body %></div>
-        <% if (typeof footerTop !=="undefined" && footerTop) { %>
-          <%- include("../includes/footer") %>
+  <%- include("../includes/navbar.ejs") %>
+    <div class="container"><%- include("../includes/flash.ejs") %><%- body %></div>
+    <% if (typeof footerTop !=="undefined" && footerTop) { %>
+      <%- include("../includes/footer") %>
+        <% } %>
+
+          <% if(currentPath==="/listings" ) { %>
+
+            <div class="mobile-bottom-nav">
+
+              <a href="/listings" class="nav-item">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Explore</span>
+              </a>
+
+              <% if (currUser) { %>
+
+                <a href="/wishlist" class="nav-item">
+                  <i class="fa-regular fa-heart"></i>
+                  <span>Wishlists</span>
+                </a>
+
+                <a href="/profile/past-trips" class="nav-item">
+                  <i class="fa-brands fa-airbnb"></i>
+                  <span>Trips</span>
+                </a>
+
+                <a href="/messages/inbox" class="nav-item">
+                  <i class="fa-regular fa-comment"></i>
+                  <span>Messages</span>
+                </a>
+
+                <a href="/profile" class="nav-item">
+
+                  <% if (currUser.profileImage && currUser.profileImage.url) { %>
+                    <img src="<%= currUser.profileImage.url %>" alt="Profile" class="nav-profile-pic">
+                    <% } else { %>
+                      <span class="profile-letter">
+                        <%= currUser.username.charAt(0).toUpperCase() %>
+                      </span>
+                      <% } %>
+
+                        <span>Profile</span>
+                </a>
+                <% } else { %>
+                  <a href="/signup" class="nav-item">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Sign up</span>
+                  </a>
+
+                  <a href="/login" class="nav-item">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Login</span>
+                  </a>
+                 <% } %>
+            </div>
+
             <% } %>
-
-              <% if(currentPath==="/listings" ) { %>
-
-                <div class="mobile-bottom-nav">
-
-                  <a href="/listings" class="nav-item">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <span>Explore</span>
-                  </a>
-
-                  <a href="/wishlist" class="nav-item">
-                    <i class="fa-regular fa-heart"></i>
-                    <span>Wishlists</span>
-                  </a>
-
-                  <a href="/profile/past-trips" class="nav-item">
-                    <i class="fa-brands fa-airbnb"></i>
-                    <span>Trips</span>
-                  </a>
-
-                  <a href="/messages/inbox" class="nav-item">
-                    <i class="fa-regular fa-comment"></i>
-                    <span>Messages</span>
-                  </a>
-
-                  <% if (currUser) { %>
-                    <a href="/profile" class="nav-item">
-
-                      <% if (currUser.profileImage && currUser.profileImage.url) { %>
-                        <img src="<%= currUser.profileImage.url %>" alt="Profile" class="nav-profile-pic">
-                        <% } else { %>
-                          <span class="profile-letter">
-                            <%= currUser.username.charAt(0).toUpperCase() %>
-                          </span>
-                          <% } %>
-
-                            <span>Profile</span>
-                    </a>
-                    <% } %>
-
-                </div>
-
-                <% } %>
-                  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-                    crossorigin="anonymous"></script>
-                  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
-                  <script src="/js/map.js" defer></script>
-                  <script src="/js/script.js" defer></script>
-                  <script src="/js/search.js" defer></script>
-                  <script src="/js/feedback.js" defer></script>
-                  <script src="/js/wishlist.js"></script>
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+                crossorigin="anonymous"></script>
+              <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+              <script src="/js/map.js" defer></script>
+              <script src="/js/script.js" defer></script>
+              <script src="/js/search.js" defer></script>
+              <script src="/js/feedback.js" defer></script>
+              <script src="/js/wishlist.js"></script>
 
 </body>
 

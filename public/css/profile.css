@@ -570,12 +570,16 @@ body.profile-view .airbnb-search {
   color: #110101;
 }
 
-
-@media (min-width: 768px){
-    .mobile-bottom-nav{
-        display: none !important;
+.logout-mobile{
+  display:none;
+}
+.mobile-bottom-nav{
+        display: none;
     }
-
+.profile-navbar{
+ display: none;
+}
+@media (max-width: 768px){
   /* Layout column */
   .profile-page{
     display:flex;
@@ -626,6 +630,20 @@ body.profile-view .airbnb-search {
     border:none;
   }
 
+ .profile-navbar{
+    display:block;
+    position:sticky;
+    top:0;
+    background:#fff;
+    border-bottom:1px solid #eee;
+    padding:10px 0;
+    z-index:1000;
+  }
+
+  .profile-view .navbar{
+    display:none;
+  }
+
   .avatar-large img{
     width:90px;
     height:90px;
@@ -640,17 +658,6 @@ body.profile-view .airbnb-search {
     padding:10px;
   }
 
-  .airbnb-options{
-    grid-template-columns:1fr;
-  }
-
-  .option{
-    padding:14px;
-  }
-
-  hr{
-    display:none;
-  }
   .complete-box{
     display:none;
   }
@@ -668,12 +675,18 @@ body.profile-view .airbnb-search {
   margin-top:15px;
   border-left: none !important;
 }
-.nav-profile-pic{
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+
+.mobile-bottom-nav .nav-profile-pic{
+    width:24px !important;
+    height:24px !important;
+    min-width:24px;
+    min-height:24px;
+    border-radius:50%;
+    object-fit:cover;
+  }
+ .mobile-bottom-nav .nav-item img{
+  flex-shrink:0;
+} 
 
 .profile-letter{
   width: 24px;
@@ -687,5 +700,18 @@ body.profile-view .airbnb-search {
   font-size: 12px;
   font-weight: bold;
 }
-
+.logout-mobile{
+  display:inline-block;
+  color:#000;
+  background-color:#dfdadb;
+  border-radius:6px;
+  width:80%;
+  margin:30px;
+  text-decoration:none;
+  font-weight:600;
+  font-size: medium;
+}
+.logout-mobile:hover{
+  background-color:#e03150;
+}
 }
